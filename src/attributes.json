@@ -1,0 +1,217 @@
+{
+  "primaryAttributes": [
+    {
+      "name": "Health",
+      "icon": "Icon_Resources_Small_Health.png",
+      "min": "50",
+      "max": "1000",
+      "description": "Death awaits when it falls to 0. Taking damage can also leave the unit wounded. Beware: Health is only partially restored every morning, as defined by health regen."
+    },
+    {
+      "name": "Mana",
+      "icon": "Icon_Resources_Small_Mana.png",
+      "min": "8",
+      "max": "140",
+      "description": "Magical energy required to use some of the Skills. Beware: Mana is only partially restored every morning, as defined by mana regen."
+    },
+    {
+      "name": "Action Points (AP)",
+      "icon": "Small_ActionPoints.png",
+      "min": "1",
+      "max": "12",
+      "description": "Energy required to use most of the Skills. Fully restored every turn."
+    },
+    {
+      "name": "Move Points (MP)",
+      "icon": "Small_MovementPoints.png",
+      "min": "3",
+      "max": "17",
+      "description": "Distance that can be travelled in a turn: 1 tile = -1MP. Fully restored every turn. Note: some Skills can use MP."
+    }
+  ],
+  "offenseAttributes": [
+    {
+      "name": "Damage",
+      "icon": "OverallDamage.png",
+      "min": "-100%",
+      "max": "+500%",
+      "description": "Modifier applied to the damage of every attack."
+    },
+    {
+      "name": "Critical",
+      "icon": "Critical.png",
+      "min": "0%",
+      "max": "100%",
+      "description": "Chances of an attack dealing a critical hit, dealing additional damage. AoE attacks consider each target separately."
+    },
+    {
+      "name": "Resistance Reduction",
+      "icon": "ResistanceReduction.png",
+      "min": 0,
+      "max": "100%",
+      "description": "Flat reduction applied to the Resistance of targeted enemies. Cannot decrease their Resistance below 0."
+    },
+    {
+      "name": "Accuracy",
+      "icon": "Accuracy.png",
+      "min": "-100%",
+      "max": "100%",
+      "description": "Flat reduction (or augmentation, if negative) applied to the Dodge of targeted enemies."
+    }
+  ],
+  "defenseAttributes": [
+    {
+      "name": "Block",
+      "icon": "Block.png",
+      "min": "0",
+      "max": "100",
+      "description": "Negates (flat reduction) a portion of incoming damage."
+    },
+    {
+      "name": "Armor",
+      "icon": "Armor.png",
+      "min": "0",
+      "max": "500",
+      "description": "Protective layer preventing Health loss. Fully restored every turn."
+    },
+    {
+      "name": "Resistance (Res.)",
+      "icon": "Resistance.png",
+      "min": "-50%",
+      "max": "100%",
+      "description": "Decreases (or increases if negative) incoming damage. (min -50%)"
+    },
+    {
+      "name": "Dodge",
+      "icon": "Dodge.png",
+      "min": "0%",
+      "max": "95%",
+      "description": "Chances of evading an attack."
+    }
+  ],
+  "secondaryAttributes": [
+    {
+      "name": "Daily Mana Regen",
+      "icon": "ManaRegen.png",
+      "min": "0",
+      "max": "140",
+      "description": "Amount of Mana restored in the morning."
+    },
+    {
+      "name": "Daily Health Regen",
+      "icon": "HealthRegen.png",
+      "min": "0",
+      "max": "1000",
+      "description": "Amount of Health restored in the morning."
+    },
+    {
+      "name": "Healing Received",
+      "icon": "HealingReceived.png",
+      "min": "33%",
+      "max": "400%",
+      "description": "Multiplier applied to any kind of health restored to this Hero (final value is rounded down)."
+    },
+    {
+      "name": "Reliability",
+      "icon": "Reliability.png",
+      "min": "0%",
+      "max": "100%",
+      "description": "Increases the minimum damage of an attack. At 100% the attack will always deal its maximum damage."
+    },
+    {
+      "name": "Critical Power",
+      "icon": "CriticalPower.png",
+      "min": "100%",
+      "max": "500%",
+      "description": "Multiplier applied to the damage of a critical hit."
+    },
+    {
+      "name": "Physical Damage",
+      "icon": "Icon_PhysicalDamage.png",
+      "max": "200%",
+      "description": "Multiplier applied to the damage of attacks using the Physical Damage type. Physical damage deals 200% damage to Armor."
+    },
+    {
+      "name": "Magic Damage",
+      "icon": "Icon_MagicalDamage.png",
+      "max": "200%",
+      "description": "Multiplier applied to the damage of attacks using the Magic Damage type. Magic Damage ignores Half of the target's Resistance."
+    },
+    {
+      "name": "Ranged Damage",
+      "icon": "Icon_RangedDamage.png",
+      "max": "200%",
+      "description": "Multiplier applied to the damage of attacks using the Ranged Damage type. Ranged Damage is inaccurate, increasing the target's Dodge the further they are. This penalty is applied before Accuracy."
+    },
+    {
+      "name": "Skill Range",
+      "icon": "SkillRangeModifier.png",
+      "min": "-2",
+      "max": "8",
+      "description": "Modifier applied to the range of skills that are tagged as range modifiable."
+    },
+    {
+      "name": "Experience Gain",
+      "icon": "ExperienceGainMultiplier.png",
+      "min": "50%",
+      "max": "300%",
+      "description": "Multiplier applied to any experience gain."
+    },
+    {
+      "name": "Poison Damage",
+      "icon": "PoisonDamageModifier.png",
+      "min": "0",
+      "max": "500%",
+      "description": "Multiplier applied to the damage of the Poison skill effect. Only affects skills with that effect."
+    },
+    {
+      "name": "Stun Chance",
+      "icon": "StunChanceModifier.png",
+      "min": "-50%",
+      "max": "100%",
+      "description": "Multiplier applied to the stun chance of the Stun skill effect. Only affects skills with that effect."
+    },
+    {
+      "name": "Multi-Hits",
+      "icon": "MultiHitsCountModifier.png",
+      "min": "0",
+      "max": "5",
+      "description": "Modifier applied to the amount of targets of the Multi-Hits skill effect. Only affects skills with that effect."
+    },
+    {
+      "name": "Propagation Bounces",
+      "icon": "PropagationBouncesModifier.png",
+      "min": "-2",
+      "max": "8",
+      "description": "Modifier applied to the number of targets of the Propagation skill effect. Only affects skills with that effect."
+    },
+    {
+      "name": "Propagation Damage",
+      "icon": "PropagationDamage.png",
+      "min": "75%",
+      "max": "100%",
+      "description": "Multiplier applied to the damage after each bounce (multiplicatively) of the Propagation skill effect. Only affects skills with that effect."
+    },
+    {
+      "name": "Momentum",
+      "icon": "MomentumAttacks.png",
+      "min": "0",
+      "max": "100%",
+      "description": "Multiplier applied to the bonus damage of the Momentum skill effect. Only affects skills with that effect."
+    },
+    {
+      "name": "Opportunism",
+      "icon": "OpportunisticAttacks.png",
+      "min": "0",
+      "max": "500%",
+      "description": "Multiplier applied to the damage dealt to targets affected by Negative alterations."
+    },
+    {
+      "name": "Isolation",
+      "icon": "IsolatedAttacks.png",
+      "min": "0",
+      "max": "500%",
+      "description": "Multiplier applied to the damage dealt to isolated targets (units with no adjacent allies)."
+    }
+  ]
+}

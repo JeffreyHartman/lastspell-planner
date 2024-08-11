@@ -2,13 +2,17 @@
   <div class="blanket"></div>
   <div class="appBackground"></div>
   <div class="content mx-auto max-w-screen-lg text-center">
-    <h1 class="text-4xl font-bold">The Last Spell Planner</h1>
+    <h1 class="class py-5 text-4xl font-bold">The Last Spell Planner</h1>
+    <h2>Perk Tree</h2>
     <perk-tree />
+    <h2 class="py-4">Attributes</h2>
+    <AttributesSelector />
   </div>
 </template>
 
 <script setup lang="ts">
 import PerkTree from "./components/PerkTree.vue";
+import AttributesSelector from "./components/attributes/AttributesSelector.vue";
 </script>
 
 <style>
