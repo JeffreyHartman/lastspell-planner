@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-around">
+  <div class="flex justify-center">
     <PerkColumn
       v-for="column in perkColumns"
       :columnId="column.id"
@@ -29,7 +29,7 @@ const perkColumns = ref<PerkColumnType[]>([
 ]);
 
 const onSelectPerk = (perk: Perk) => {
-  console.log("Selected perk:", perk.name);
+  console.log("Selected perk: ", perk ? perk.name : "Cleared Perk");
 };
 
 const onColumnTypeSelected = (newType: string, id: number) => {

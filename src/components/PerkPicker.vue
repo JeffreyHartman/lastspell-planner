@@ -21,13 +21,7 @@
           :alt="perk.name"
           class="h-8 w-8 cursor-pointer rounded-md hover:ring-2 hover:ring-blue-500"
         />
-        <!-- Tooltip -->
-        <div
-          class="absolute left-full ml-2 hidden w-64 rounded-md bg-gray-900 p-2 text-sm text-white shadow-lg group-hover:block"
-        >
-          <h3 class="mb-1 font-bold">{{ perk.name }}</h3>
-          <p class="text-xs">{{ perk.description }}</p>
-        </div>
+        <PerkTooltip :perk="perk" />
       </div>
     </div>
   </div>
@@ -37,6 +31,7 @@
 import { ref, PropType, computed } from "vue";
 import { Perk } from "../types/Perk";
 import { onClickOutside, onKeyStroke } from "@vueuse/core";
+import PerkTooltip from "../components/PerkTooltip.vue";
 
 const props = defineProps({
   perks: {

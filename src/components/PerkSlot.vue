@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <div
-      class="perk-slot flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700"
+      class="perk-slot group flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700"
       @click="togglePerkPicker"
       ref="perkSlot"
     >
@@ -11,6 +11,7 @@
         :alt="selectedPerk.name"
         class="h-8 w-8"
       />
+      <PerkTooltip v-if="selectedPerk" :perk="selectedPerk" />
     </div>
     <PerkPicker
       v-if="showPerkPicker"
@@ -27,6 +28,7 @@ import { computed, defineEmits, ref, PropType, nextTick } from "vue";
 import { Perk } from "../types/Perk";
 import { getPerksByTypeAndTier } from "../services/perkService";
 import PerkPicker from "./PerkPicker.vue";
+import PerkTooltip from "./PerkTooltip.vue";
 
 const props = defineProps({
   perk: {
@@ -48,12 +50,6 @@ const emit = defineEmits(["select-perk"]);
 const showPerkPicker = ref(false);
 const perkSlot = ref<HTMLElement | null>(null);
 const pickerPosition = ref({ top: "0px", left: "0px" });
-
-// const perkIcon = computed(() => {
-//   return props.perk
-//     ? new URL(`./assets/icons/perks/${props.perk.icon}`, import.meta.url).href
-//     : "";
-// });
 
 const selectedPerk = ref<Perk | null>(props.perk);
 
@@ -90,7 +86,7 @@ const handleSelectPerk = (perk: Perk) => {
   selectedPerk.value = perk.id === 0 ? null : perk;
 
   // Emit the event to the parent
-  emit("select-perk", selectedPerk.value);
+  emit("select-perk", selectedPerk ? selectedPerk.value : null);
 
   // Close the picker
   showPerkPicker.value = false;

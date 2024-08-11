@@ -71,7 +71,7 @@ const toggleColumnTypeSelector = (event: MouseEvent) => {
 };
 
 const onSelectPerk = (perk: Perk) => {
-  emit("select-perk", perk);
+  emit("select-perk", perk ? perk : null);
 };
 
 const handleColumnTypeSelected = (columnType: string) => {
