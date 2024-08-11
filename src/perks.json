@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "icon": "/assets/icons/perks/111---fatality.webp",
+    "type": "melee",
+    "name": "Fatality",
+    "tier": 1,
+    "description": "Unlocks the Fatality Skill, allowing to Execute any enemy with less than 10 Health. This threshold is increased by 3 for each level of the hero. /r Fatality Skill: No cost, melee range, targets 1. Unlimited uses per turn. Ignores armor and resistances. "
+  },
+  {
+    "id": 2,
+    "icon": "/assets/icons/perks/112---sprint.webp",
+    "type": "melee",
+    "name": "Sprint",
+    "tier": 1,
+    "description": "Unlocks the Sprint skill, allowing to restore Move Points in exchange of some Health. Sprint skill: costs 10 Icon Resources Small HealthHealth, target self, Restores 3 Small MovementPointsMove Points, maximum of 2 uses per turn. "
+  },
+  {
+    "id": 3,
+    "icon": "/assets/icons/perks/211---bodybuilder.webp",
+    "type": "melee",
+    "name": "Bodybuilder",
+    "tier": 2,
+    "description": "Every 10 max Health after 100, +1% Physical damage."
+  },
+  {
+    "id": 4,
+    "icon": "/assets/icons/perks/212---spiky-counter.webp",
+    "type": "melee",
+    "name": "Spiky Counter",
+    "tier": 2,
+    "description": "-20% Dodge. Whenever the hero is hit: Automatically cast the Spiky Counter skill on the attacker, with a base damage equal to 50 + 200% of the Hero's Block. Spiky Counter skill: Physical damage, targets 1, unlimited range, unlimited uses per turn."
+  },
+  {
+    "id": 5,
+    "icon": "/assets/icons/perks/312---vampire.webp",
+    "type": "melee",
+    "name": "Vampire",
+    "tier": 3,
+    "description": "Whenever an enemy is killed using Physical damage or Execute: Restore 4 Health."
+  },
+  {
+    "id": 6,
+    "icon": "/assets/icons/perks/311---relentless.webp",
+    "type": "melee",
+    "name": "Relentless",
+    "tier": 3,
+    "description": "Whenever the Hero has 3 or less Move Points and attacks in melee range: Restore 1 Move Points, increased by 1 if at least one enemy is killed (for a total of 2)."
+  },
+  {
+    "id": 7,
+    "icon": "/assets/icons/perks/412---organic-armor.webp",
+    "type": "melee",
+    "name": "Organic Armor",
+    "tier": 4,
+    "description": "+50% Healing received. All of the Hero's Armor is transformed into Health (conversion rate of 150%)"
+  },
+  {
+    "id": 8,
+    "icon": "/assets/icons/perks/411---head-on.webp",
+    "type": "melee",
+    "name": "Head On",
+    "tier": 4,
+    "description": "Every 4 tiles traveled (excluding skills with No Momentum), the next attack gets: +15% Physical damage, Unblockable. This modifier doesn't stack."
+  },
+  {
+    "id": 9,
+    "icon": "/assets/icons/perks/511---berserk.webp",
+    "type": "melee",
+    "name": "Berserk",
+    "tier": 5,
+    "description": "Whenever the Hero is attacked: +4% Damage. This modifier is reset every morning."
+  },
+  {
+    "id": 10,
+    "icon": "/assets/icons/perks/512---boom.webp",
+    "type": "melee",
+    "name": "BOOM!",
+    "tier": 5,
+    "description": "Whenever an enemy is killed within a range of 3: the overkill damage is transferred to all adjacent units (except this Hero)"
+  },
+  {
+    "id": 11,
+    "icon": "/assets/icons/perks/123---harvester.webp",
+    "type": "magic",
+    "name": "Harvester",
+    "tier": 1,
+    "description": "Every 4 enemy killed: +1 Mana Regen, up to 25% of the Hero's max Mana. This modifier is reset every morning."
+  },
+  {
+    "id": 12,
+    "icon": "/assets/icons/perks/121---mana-growth.webp",
+    "type": "magic",
+    "name": "Mana Growth",
+    "tier": 1,
+    "description": "+6 Mana, increased by 3 for each level of the hero."
+  },
+  {
+    "id": 13,
+    "icon": "/assets/icons/perks/221---magic-fuel.webp",
+    "type": "magic",
+    "name": "Magic Fuel",
+    "tier": 2,
+    "description": "Damage is increased by 30% of the Hero's current Mana."
+  },
+  {
+    "id": 14,
+    "icon": "/assets/icons/perks/223---critical-runes.webp",
+    "type": "magic",
+    "name": "Critical Runes",
+    "tier": 2,
+    "description": "Every 10% of missing Mana: +4% Critical."
+  },
+  {
+    "id": 15,
+    "icon": "/assets/icons/perks/323---thrifty.webp",
+    "type": "magic",
+    "name": "Thrifty",
+    "tier": 3,
+    "description": "Every 8 Action points spent, the next Mana consuming Skills gets: Mana cost / 2 (rounded down). This modifier doesn't stack."
+  },
+  {
+    "id": 16,
+    "icon": "/assets/icons/perks/321---energized.webp",
+    "type": "magic",
+    "name": "Energized",
+    "tier": 3,
+    "description": "Every 7 Mana spent: Restore 1 Action points."
+  },
+  {
+    "id": 17,
+    "icon": "/assets/icons/perks/421---blink.webp",
+    "type": "magic",
+    "name": "Blink",
+    "tier": 4,
+    "description": "Unlocks the Blink skill, allowing the Hero to teleport to another tile. Blink skill: costs 3 Mana, 1-6 range (not range modifiable), targets 1 empty tile, limit of 2 uses per turn, Vision, Maneuver."
+  },
+  {
+    "id": 18,
+    "icon": "/assets/icons/perks/422---explosive-essence.webp",
+    "type": "magic",
+    "name": "Explosive Essence",
+    "tier": 4,
+    "description": "When attacking with a Mana consuming Skill, the attack gets: +50% Critical Power."
+  },
+  {
+    "id": 19,
+    "icon": "/assets/icons/perks/521---sheer-power.webp",
+    "type": "magic",
+    "name": "Sheer Power",
+    "tier": 5,
+    "description": "Attacks now ignore 50% of the target's Resistance. This effect can be cumulated with magic damage's unique property, thus ignoring All of the target's Resistance."
+  },
+  {
+    "id": 20,
+    "icon": "/assets/icons/perks/522---mana-collector.webp",
+    "type": "magic",
+    "name": "Mana Collector",
+    "tier": 5,
+    "description": "Whenever a critical hit is landed: restore 1 Mana at the end of the Heroes' turn, up to 10 per turn."
+  },
+  {
+    "id": 21,
+    "icon": "/assets/icons/perks/132---steady-aim.webp",
+    "type": "ranged",
+    "name": "Steady Aim",
+    "tier": 1,
+    "description": "As long as the Hero didn't move during this turn, +10% Accuracy, +1 Skill Range."
+  },
+  {
+    "id": 22,
+    "icon": "/assets/icons/perks/131---perseverance.webp",
+    "type": "ranged",
+    "name": "Perseverance",
+    "tier": 1,
+    "description": "Every 2 attacks from the Hero dodged by at least 1 unit: Restore 1 Action Points. The Hero receives a +5% Accuracy Buff for 2 turns."
+  },
+  {
+    "id": 23,
+    "icon": "/assets/icons/perks/231---mark.webp",
+    "type": "ranged",
+    "name": "Mark",
+    "tier": 2,
+    "description": "Unlock the Mark Skill, allowing to Debuff the target's Dodge. Mark skill: No cost, 1-9 range (not range modifiable), targets 1, 2 uses per turn, gives the target a -20% Dodge debuff for 1 turn."
+  },
+  {
+    "id": 24,
+    "icon": "/assets/icons/perks/232---thirdeye.webp",
+    "type": "ranged",
+    "name": "Third Eye",
+    "tier": 2,
+    "description": "Every 2 enemy hit, the next Skill gets: Vision. This modifier doesn't stack."
+  },
+  {
+    "id": 25,
+    "icon": "/assets/icons/perks/332---shorter-weapons.webp",
+    "type": "ranged",
+    "name": "Shorter Weapons",
+    "tier": 3,
+    "description": "-1 Skill Range, +15% Accuracy, +20% Reliability."
+  },
+  {
+    "id": 26,
+    "icon": "/assets/icons/perks/331---longer-weapons.webp",
+    "type": "ranged",
+    "name": "Longer Weapons",
+    "tier": 3,
+    "description": "-25% Reliability, +2 Skill Range."
+  },
+  {
+    "id": 27,
+    "icon": "/assets/icons/perks/431---proximity-shot.webp",
+    "type": "ranged",
+    "name": "Proximity Shot",
+    "tier": 4,
+    "description": "When attacking with a Skill dealing ranged damage, the Skill gets: +40% Total Damage, reduced by 8% for each tile of distance from the Hero after the first one. This modifier cannot go below 0%. (Total Damage is applied applied after Damage, but before Resistance, Block and Critical)"
+  },
+  {
+    "id": 28,
+    "icon": "/assets/icons/perks/432---field-study.webp",
+    "type": "ranged",
+    "name": "Field Study",
+    "tier": 4,
+    "description": "For every 12 units killed at a distance of 4 tiles or more: +1 Skill Range. This modifier is reset every morning."
+  },
+  {
+    "id": 29,
+    "icon": "/assets/icons/perks/532---exploit-weakness.webp",
+    "type": "ranged",
+    "name": "Exploit Weakness",
+    "tier": 5,
+    "description": "Isolation is increased by 100% of the Hero's Accuracy. Opportunism is increased by 100% of the Hero's Resistance Reduction."
+  },
+  {
+    "id": 30,
+    "icon": "/assets/icons/perks/531---surgical-strike.webp",
+    "type": "ranged",
+    "name": "Surgical Strike",
+    "tier": 5,
+    "description": "When attacking a unit with full Health, the attack gets: +50% Reliability, +20% Accuracy."
+  },
+  {
+    "id": 31,
+    "icon": "/assets/icons/perks/171---septic-shock.webp",
+    "type": "poison",
+    "name": "Septic Shock",
+    "tier": 1,
+    "description": "When applying Poison to a unit currently Poisoned: also apply Stun for 1 turn with a base chance of 50% (modifiable by Stun Chance and stun resistance)"
+  },
+  {
+    "id": 32,
+    "icon": "/assets/icons/perks/271---poisonous.webp",
+    "type": "poison",
+    "name": "Poisonous",
+    "tier": 2,
+    "description": "At the end of the Heroes' turn: apply 40 Poison to all enemies within a range of 3 for 3 turns."
+  },
+  {
+    "id": 33,
+    "icon": "/assets/icons/perks/371---toxic-leech.webp",
+    "type": "poison",
+    "name": "Toxic Leech",
+    "tier": 3,
+    "description": "Whenever a unit takes damage from Poison within a range of 5: Restore 2 Health."
+  },
+  {
+    "id": 34,
+    "icon": "/assets/icons/perks/471---epidemic.webp",
+    "type": "poison",
+    "name": "Epidemic",
+    "tier": 4,
+    "description": "When applying Poison to a unit: also apply the Contagion Alteration for 2 turns."
+  },
+  {
+    "id": 35,
+    "icon": "/assets/icons/perks/571---potenttoxins.webp",
+    "type": "poison",
+    "name": "Potent Toxins",
+    "tier": 5,
+    "description": "+100% Poison Damage. Any Poison applied by the hero has its duration decreased by 1 turn."
+  },
+  {
+    "id": 36,
+    "icon": "/assets/icons/perks/161---stunning.webp",
+    "type": "debuff",
+    "name": "Stunning!",
+    "tier": 1,
+    "description": "+15% Stun Chance."
+  },
+  {
+    "id": 37,
+    "icon": "/assets/icons/perks/261---contamination.webp",
+    "type": "debuff",
+    "name": "Contamination",
+    "tier": 2,
+    "description": "Unlocks the Contamination skill, allowing to apply the Contagion Alteration to the target. Contamination skill: No cost, 1-9 range (not range modifiable), targets 1, 2 uses per turn, gives the target the Contagion Alteration for 2 turns."
+  },
+  {
+    "id": 38,
+    "icon": "/assets/icons/perks/361---sadist.webp",
+    "type": "debuff",
+    "name": "Sadist",
+    "tier": 3,
+    "description": "Whenever a Negative alteration is applied by the Hero: Hero gains a +1% Opportunism Buff for 2 turns."
+  },
+  {
+    "id": 39,
+    "icon": "/assets/icons/perks/461---bully.webp",
+    "type": "debuff",
+    "name": "Bully",
+    "tier": 4,
+    "description": "When attacking a unit, for each Negative alteration of a different type they are affected by, the attack gets: +25% Critical, -15% Critical Power."
+  },
+  {
+    "id": 40,
+    "icon": "/assets/icons/perks/561---hex.webp",
+    "type": "debuff",
+    "name": "Hex",
+    "tier": 5,
+    "description": "Any Negative alterations applied by the Hero has its duration increased by 1 turn."
+  },
+  {
+    "id": 41,
+    "icon": "/assets/icons/perks/141---cherry-picking.webp",
+    "type": "assassin",
+    "name": "Cherry Picking",
+    "tier": 1,
+    "description": "When attacking a isolated unit, the attack gets: +40% Reliability."
+  },
+  {
+    "id": 42,
+    "icon": "/assets/icons/perks/241---first-blood.webp",
+    "type": "assassin",
+    "name": "First Blood",
+    "tier": 2,
+    "description": "When attacking a unit at full Health, the attack gets: +15% Critical."
+  },
+  {
+    "id": 43,
+    "icon": "/assets/icons/perks/341---one-by-one.webp",
+    "type": "assassin",
+    "name": "One By One",
+    "tier": 3,
+    "description": "Whenever a isolated unit is killed: +4% Damage, or +6% Damage when using physical damage, up to 60%. Hitting a non isolated unit decreases this bonus by -6% Damage, down to 0. The modifier is reset every morning."
+  },
+  {
+    "id": 44,
+    "icon": "/assets/icons/perks/441---critical-master.webp",
+    "type": "assassin",
+    "name": "Critical Master",
+    "tier": 4,
+    "description": "+20% Critical Power. Every 5 critical hits landed: +4% Critical Power. This modifier is reset every morning."
+  },
+  {
+    "id": 45,
+    "icon": "/assets/icons/perks/541---legendary-assassin.webp",
+    "type": "assassin",
+    "name": "Legendary assassin",
+    "tier": 5,
+    "description": "Every 3 isolated units killed: Restore 1 Action points."
+  },
+  {
+    "id": 46,
+    "icon": "/assets/icons/perks/151---back-protection.webp",
+    "type": "defense",
+    "name": "Back protection",
+    "tier": 1,
+    "description": "Whenever the Hero is adjacent to a Building, Defense or Obstacle: +25 Armor, this bonus increases by 5 for each level of the hero."
+  },
+  {
+    "id": 47,
+    "icon": "/assets/icons/perks/251---defensive-training.webp",
+    "type": "defense",
+    "name": "Defensive Training",
+    "tier": 2,
+    "description": "Enemies killed by defenses now give bonus XP to the hero (as if they were the killer)"
+  },
+  {
+    "id": 48,
+    "icon": "/assets/icons/perks/351---resupply.webp",
+    "type": "defense",
+    "name": "Resupply",
+    "tier": 3,
+    "description": "Unlocks the Resupply Traps skill, allowing to Restore 1 charge to nearby Traps. Resupply Traps skill: 1-6 range (not range modifiable), 9 targets (3x3 square), 3 uses per night, 1 use per turn, Charge restoration (restores 1 charge to targeted Traps), Vision. Also unlocks the Resupply Catapult skill, allowing to Restore 1 use per night to a nearby catapult. Resupply Catapult skill: 1-6 range (not range modifiable), targets 1, 3 uses per night, 2 use per turn, Use restoration (restores 1 use per night to catapults), Vision."
+  },
+  {
+    "id": 49,
+    "icon": "/assets/icons/perks/451---human-ballista.webp",
+    "type": "defense",
+    "name": "Human Ballista",
+    "tier": 4,
+    "description": "At the end of the enemy movement phase, the Hero automatically attacks the 2 nearest enemies with the Human Ballista Bolt skill. Human Ballista Bolt skill: no cost, 90-125 base damage, adaptative damage (will be of the same damage type as the Hero's best attribute between Physical damage, Magic damage and Ranged damage, also gaining the special properties of the chosen damage type), 2-6 range (range modifiable), target 1 enemy, 2 uses per turn."
+  },
+  {
+    "id": 50,
+    "icon": "/assets/icons/perks/551---fortress-master.webp",
+    "type": "defense",
+    "name": "Fortress Master",
+    "tier": 5,
+    "description": "Increases the damage of all Defences (catapults, ballistae and traps...) within a range of 8 by 50% (can stack)"
+  },
+  {
+    "id": 51,
+    "icon": "/assets/icons/perks/182---coagulation.webp",
+    "type": "misc",
+    "name": "Coagulation",
+    "tier": 1,
+    "description": "Armor is increased by 110% of the Hero's Daily Health Regen."
+  },
+  {
+    "id": 52,
+    "icon": "/assets/icons/perks/181---cheer.webp",
+    "type": "misc",
+    "name": "Cheer",
+    "tier": 1,
+    "description": "Unlocks the Cheer Skill, which allows to Buff the Damage of an ally. Cheer skill: No cost, 1-10 range (not range modifiable), targets 1 ally, 1 use per turn, applies a +15% Damage Buff for 1 turn to the target."
+  },
+  {
+    "id": 53,
+    "icon": "/assets/icons/perks/184---potion-throw.webp",
+    "type": "misc",
+    "name": "Potion Throw",
+    "tier": 1,
+    "description": "+1 Bag equipment slot. (Max 4). Potions now have a range of 15 tiles!"
+  },
+  {
+    "id": 54,
+    "icon": "/assets/icons/perks/185---quick-reload.webp",
+    "type": "misc",
+    "name": "Quick Reload",
+    "tier": 1,
+    "description": "Unlocks the Quick Reload skill, allowing to restore 1 use to all Skills of the current weapon set. Quick Reload skill: Target self, 3 uses per night, maximum of 1 use per turn, Weapon restoration"
+  },
+  {
+    "id": 55,
+    "icon": "/assets/icons/perks/183---leapfrog.webp",
+    "type": "misc",
+    "name": "Leapfrog",
+    "tier": 1,
+    "description": "Upgrades the Jump Over skill: -1 Move point cost (from 3 to 2), from melee range to 1-2 range cardinal, can also target enemies."
+  },
+  {
+    "id": 56,
+    "icon": "/assets/icons/perks/281---avid-learner.webp",
+    "type": "misc",
+    "name": "Avid Learner",
+    "tier": 2,
+    "description": "+25% Experience Gain."
+  },
+  {
+    "id": 57,
+    "icon": "/assets/icons/perks/282---crippling-punch.webp",
+    "type": "misc",
+    "name": "Crippling Punch",
+    "tier": 2,
+    "description": "Upgrades the Punch skill to Crippling Punch, dealing more double Damage and allowing to Debuff the target's Move Points."
+  },
+  {
+    "id": 58,
+    "icon": "/assets/icons/perks/283---glass-cannon.webp",
+    "type": "misc",
+    "name": "Glass Cannon",
+    "tier": 2,
+    "description": "-60 Health. +15% Critical."
+  },
+  {
+    "id": 59,
+    "icon": "/assets/icons/perks/285---overload.webp",
+    "type": "misc",
+    "name": "Overload",
+    "tier": 2,
+    "description": "+1 Bag equipement slot (Max 4). +1 Use per night for every consumable item."
+  },
+  {
+    "id": 60,
+    "icon": "/assets/icons/perks/284---nimbleness.webp",
+    "type": "misc",
+    "name": "Nimbleness",
+    "tier": 2,
+    "description": "As long as the Hero isn't wounded: +15% Dodge, +2 Move Points."
+  },
+  {
+    "id": 61,
+    "icon": "/assets/icons/perks/385---runic-gift.webp",
+    "type": "misc",
+    "name": "Runic Gift",
+    "tier": 3,
+    "description": "+1 trinket equipment turn (Max 2). For every trinket equipped: +3 Mana per item level."
+  },
+  {
+    "id": 62,
+    "icon": "/assets/icons/perks/382---initiator.webp",
+    "type": "misc",
+    "name": "Initiator",
+    "tier": 3,
+    "description": "As long as the Hero didn't kill anyone this turn: +2 MultiHit, -10% Damage."
+  },
+  {
+    "id": 63,
+    "icon": "/assets/icons/perks/384---quantity-vs-quality.webp",
+    "type": "misc",
+    "name": "Quantity Vs Quality",
+    "tier": 3,
+    "description": "+3 Propagation Bounces, -6% Propagation Damage. Every 8 enemies killed by propagation: -1 Propagation Bounces, +3% Propagation Damage. This modifiers are resets every morning."
+  },
+  {
+    "id": 64,
+    "icon": "/assets/icons/perks/383---lone-wolf.webp",
+    "type": "misc",
+    "name": "Lone Wolf",
+    "tier": 3,
+    "description": "As long as there is no other Hero within a range of 5: +12% Damage. As long as there is no other Hero within a range of 10: +18% Damage. Both bonuses stack for total of +30%."
+  },
+  {
+    "id": 65,
+    "icon": "/assets/icons/perks/381---blood-magic.webp",
+    "type": "misc",
+    "name": "Blood Magic",
+    "tier": 3,
+    "description": "Skills now cost Health instead of Mana at 4x the original cost. All of the Hero's Mana is converted to Resistance (25% conversion rate) and Daily Mana Regen is converted to Daily Health Regen. Some Mana-related Perks are replaced accordingly."
+  },
+  {
+    "id": 66,
+    "icon": "/assets/icons/perks/485---mana-shield.webp",
+    "type": "misc",
+    "name": "Mana Shield",
+    "tier": 4,
+    "description": "For every 2 Mana spent, gain +3 Block buff for 3 turns."
+  },
+  {
+    "id": 67,
+    "icon": "/assets/icons/perks/482---inertia.webp",
+    "type": "misc",
+    "name": "Inertia",
+    "tier": 4,
+    "description": "Every 3 tiles traveled (excluding skills with No Momentum), the next time a Skill with the Momentum is cast: Restore 2 Move Points. This modifier cannot be stacked."
+  },
+  {
+    "id": 68,
+    "icon": "/assets/icons/perks/484---volatile-reaction.webp",
+    "type": "misc",
+    "name": "Volatile Reaction",
+    "tier": 4,
+    "description": "+1 Propagation Bounces. Propagation can now bounce diagonally."
+  },
+  {
+    "id": 69,
+    "icon": "/assets/icons/perks/481---flexibility.webp",
+    "type": "misc",
+    "name": "Flexibility",
+    "tier": 4,
+    "description": "When attacking with a damage type that differs from the previous one, the attack gets: +25% Total Damage. (Total Damage is applied applied after Damage, but before Resistance, Block and Critical)"
+  },
+  {
+    "id": 70,
+    "icon": "/assets/icons/perks/483---specialist.webp",
+    "type": "misc",
+    "name": "Specialist",
+    "tier": 4,
+    "description": "Disables the second weapon set, in exchange for +50% Damage and +1 use per turn on every Skill provided by your remaining weapon set (Items in Hand slots)."
+  },
+  {
+    "id": 71,
+    "icon": "/assets/icons/perks/584---dont-panic.webp",
+    "type": "misc",
+    "name": "Don't panic",
+    "tier": 5,
+    "description": "When attacking a tile within the haven, the attack gets: +15% Accuracy, +40% Total Damage. (Total Damage is applied applied after Damage, but before Resistance, Block and Critical)"
+  },
+  {
+    "id": 72,
+    "icon": "/assets/icons/perks/581---adrenaline-rush.webp",
+    "type": "misc",
+    "name": "Adrenaline Rush",
+    "tier": 5,
+    "description": "Whenever the Hero dodges: gain a +1 Action point buff for 1 turn."
+  },
+  {
+    "id": 73,
+    "icon": "/assets/icons/perks/583---blessing.webp",
+    "type": "misc",
+    "name": "Blessing",
+    "tier": 5,
+    "description": "Any Buff applied by this hero has its duration increased by 1 turn."
+  },
+  {
+    "id": 74,
+    "icon": "/assets/icons/perks/585---night-owl.webp",
+    "type": "misc",
+    "name": "Night Owl",
+    "tier": 5,
+    "description": "Whenever the 5th turn of the Night is reached, gain +2 Action Points and +3 Move Points (Cannot exceed the maximum limit). This modifier is reset every morning."
+  },
+  {
+    "id": 75,
+    "icon": "/assets/icons/perks/582---big-game-hunter.webp",
+    "type": "misc",
+    "name": "Big Game Hunter",
+    "tier": 5,
+    "description": "When attacking a enemy with 600 max Health, the attack gets: +20% Total Damage, increased by +2% for every 120 additional max Health, up to +50%. (Total Damage is applied applied after Damage, but before Resistance, Block and Critical)"
+  }
+]
