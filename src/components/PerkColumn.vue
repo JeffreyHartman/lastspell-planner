@@ -57,7 +57,10 @@ const showTypeSelector = ref(false);
 const typeSelectorPosition = ref({ top: "", left: "" });
 
 const getSelectedPerk = (tier: number) => {
-  return props.selectedPerks.find((perk) => perk.tier === tier) || null;
+  console.log(`Getting perk for tier ${tier}, selectedPerks:`, props.selectedPerks);
+  const perk = props.selectedPerks.find((perk) => perk.tier === tier);
+  console.log(`Found perk:`, perk);
+  return perk || null;
 };
 
 const toggleColumnTypeSelector = (event: MouseEvent) => {
@@ -70,8 +73,8 @@ const toggleColumnTypeSelector = (event: MouseEvent) => {
   }
 };
 
-const onSelectPerk = (perk: Perk) => {
-  emit("select-perk", perk ? perk : null);
+const onSelectPerk = (perk: Perk | null, tier: number) => {
+  emit("select-perk", perk, props.columnId, tier);
 };
 
 const handleColumnTypeSelected = (columnType: string) => {

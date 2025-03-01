@@ -9,7 +9,7 @@
         v-if="selectedPerk"
         :src="selectedPerk.icon"
         :alt="selectedPerk.name"
-        class="h-8 w-8"
+        class="h-10 w-10"
       />
       <PerkTooltip v-if="selectedPerk" :perk="selectedPerk" />
     </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits, ref, PropType, nextTick } from "vue";
+import { computed, defineEmits, ref, PropType, nextTick, watch } from "vue";
 import { Perk } from "../types/Perk";
 import { getPerksByTypeAndTier } from "../services/perkService";
 import PerkPicker from "./PerkPicker.vue";
@@ -51,7 +51,13 @@ const showPerkPicker = ref(false);
 const perkSlot = ref<HTMLElement | null>(null);
 const pickerPosition = ref({ top: "0px", left: "0px" });
 
-const selectedPerk = ref<Perk | null>(props.perk);
+// Use a computed property for the selected perk
+const selectedPerk = computed(() => props.perk);
+
+// Watch for changes in the perk prop
+watch(() => props.perk, (newPerk) => {
+  console.log('Perk changed:', newPerk);
+}, { immediate: true });
 
 const availablePerks = computed(() => {
   const perks = getPerksByTypeAndTier(props.columnType, props.tier);
@@ -82,11 +88,8 @@ const togglePerkPicker = async () => {
 };
 
 const handleSelectPerk = (perk: Perk) => {
-  // Update the local state
-  selectedPerk.value = perk.id === 0 ? null : perk;
-
-  // Emit the event to the parent
-  emit("select-perk", selectedPerk ? selectedPerk.value : null);
+  // Emit the event to the parent with the tier
+  emit("select-perk", perk.id === 0 ? null : perk, props.tier);
 
   // Close the picker
   showPerkPicker.value = false;
