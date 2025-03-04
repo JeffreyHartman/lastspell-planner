@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits, ref, PropType, nextTick, watch } from "vue";
+import { computed, ref, PropType, nextTick, watch } from "vue";
 import { Perk } from "../types/Perk";
 import { getPerksByTypeAndTier } from "../services/perkService";
 import PerkPicker from "./PerkPicker.vue";

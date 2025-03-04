@@ -9,6 +9,7 @@
       @columntype-selected="onColumnTypeSelected"
     />
   </div>
+  <button @click="resetPerks">Reset Perks</button>
 </template>
 
 <script setup lang="ts">
@@ -16,7 +17,7 @@ import { ref, onMounted, watch } from "vue";
 import PerkColumn from "./PerkColumn.vue";
 import { PerkColumnType } from "../types/PerkColumn";
 import { Perk } from "../types/Perk";
-import { getAllPerks, getPerkById } from "../services/perkService";
+import { getPerkById } from "../services/perkService";
 
 const perkColumns = ref<PerkColumnType[]>([
   { id: 0, type: "melee", perks: [] },
@@ -119,5 +120,14 @@ const onColumnTypeSelected = (newType: string, id: number) => {
   if (column) {
     column.type = newType;
   }
+};
+
+const resetPerks = () => {
+  perkColumns.value.forEach((column) => {
+    column.perks = [];
+    if (column.id === 3 || column.id === 4) {
+      column.type = "choice";
+    }
+  });
 };
 </script>
