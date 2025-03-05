@@ -6,6 +6,7 @@
 
       <!-- Tooltip -->
       <div
+        v-if="showTooltip"
         class="absolute left-full z-10 ml-2 hidden w-64 rounded-md bg-gray-900 p-2 text-sm text-white shadow-lg group-hover:block"
       >
         <h3 class="mb-1 font-bold">{{ attribute.name }}</h3>
@@ -24,5 +25,6 @@ import { Attribute } from "@/types/Attribute";
 
 defineProps<{
   attribute: Attribute;
+  showTooltip?: boolean;
 }>();
 </script>

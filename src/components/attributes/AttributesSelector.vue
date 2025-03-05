@@ -19,8 +19,16 @@
 
       <!-- Selected primary attributes list -->
       <div class="mt-4 space-y-2">
-        <div v-for="attribute in selectedPrimaryAttributes" :key="attribute.id">
-          <AttributeItem :attribute="attribute" />
+        <div
+          v-for="attribute in selectedPrimaryAttributes"
+          :key="attribute.id"
+          class="flex gap-4"
+        >
+          <AttributeItem :attribute="attribute" :show-tooltip="true" />
+          <TrashIcon
+            class="h-5 w-5 cursor-pointer"
+            @click="removeAttribute(attribute)"
+          />
         </div>
       </div>
     </div>
@@ -43,19 +51,20 @@ import AttributeDropdown from "./AttributeDropdown.vue";
 import AttributeItem from "./AttributeItem.vue";
 import { Attribute } from "@/types/Attribute";
 import { getAttributeById } from "@/services/attributesService";
+import { TrashIcon } from "@heroicons/vue/24/solid";
 
 const showPrimaryDropdown = ref(false);
 
-//const selectedPrimaryAttributes = ref<Attribute[]>([]);
+const selectedPrimaryAttributes = ref<Attribute[]>([]);
 
-const selectedPrimaryAttributes = ref<Attribute[]>([
-  getAttributeById(1)!,
-  getAttributeById(2)!,
-  getAttributeById(3)!,
-]);
-
-const addPrimaryAttribute = (attribute: any) => {
-  console.log("Selected attribute:", attribute);
+const addPrimaryAttribute = (attribute: Attribute) => {
+  selectedPrimaryAttributes.value.push(attribute);
   showPrimaryDropdown.value = false;
+};
+
+const removeAttribute = (attribute: Attribute) => {
+  selectedPrimaryAttributes.value = selectedPrimaryAttributes.value.filter(
+    (attr) => attr.id !== attribute.id,
+  );
 };
 </script>
