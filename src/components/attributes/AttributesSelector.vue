@@ -6,9 +6,9 @@
       <button
         class="mb-2 w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         @click="showPrimaryDropdown = !showPrimaryDropdown"
-        :disabled="selectedPrimaryAttributes.length >= 5"
+        :disabled="attributeStore.isPrimaryFull"
       >
-        Add Primary Attribute ({{ selectedPrimaryAttributes.length }}/5)
+        Add Primary Attribute ({{ attributeStore.primaryAttributes.length }}/5)
       </button>
 
       <!-- Primary Attribute Dropdown-->
@@ -21,7 +21,7 @@
       <!-- Selected primary attributes list -->
       <div class="mt-4 h-[250px] space-y-2">
         <div
-          v-for="attribute in selectedPrimaryAttributes"
+          v-for="attribute in attributeStore.primaryAttributes"
           :key="attribute.id"
           class="flex gap-4"
         >
@@ -40,9 +40,11 @@
       <button
         class="mb-2 w-full rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         @click="showSecondaryDropdown = !showSecondaryDropdown"
-        :disabled="selectedSecondaryAttributes.length >= 5"
+        :disabled="attributeStore.isSecondaryFull"
       >
-        Add Secondary Attribute ({{ selectedSecondaryAttributes.length }}/5)
+        Add Secondary Attribute ({{
+          attributeStore.secondaryAttributes.length
+        }}/5)
       </button>
 
       <!-- Secondary Attribute Dropdown -->
@@ -55,7 +57,7 @@
       <!-- Selected secondary attributes list -->
       <div class="mt-4 h-[250px] space-y-2">
         <div
-          v-for="attribute in selectedSecondaryAttributes"
+          v-for="attribute in attributeStore.secondaryAttributes"
           :key="attribute.id"
           class="flex gap-4"
         >
@@ -72,28 +74,29 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useAttributeStore } from "@/stores/attributeStore";
 import AttributeDropdown from "./AttributeDropdown.vue";
 import AttributeItem from "./AttributeItem.vue";
 import { Attribute } from "@/types/Attribute";
 import { getAttributeById } from "@/services/attributesService";
 import { TrashIcon } from "@heroicons/vue/24/solid";
 
+const attributeStore = useAttributeStore();
 const showPrimaryDropdown = ref(false);
 const showSecondaryDropdown = ref(false);
 
-const selectedPrimaryAttributes = ref<Attribute[]>([]);
-const selectedSecondaryAttributes = ref<Attribute[]>([]);
+// const selectedPrimaryAttributes = ref<Attribute[]>([]);
+// const selectedSecondaryAttributes = ref<Attribute[]>([]);
 
 const addPrimaryAttribute = (attribute: Attribute) => {
-  if (selectedPrimaryAttributes.value.length < 5) {
-    selectedPrimaryAttributes.value.push(attribute);
+  // add to store and set dropdown state depending on if store is now full
+  if (attributeStore.addPrimaryAttribute(attribute)) {
     showPrimaryDropdown.value = false;
   }
 };
 
 const addSecondaryAttribute = (attribute: Attribute) => {
-  if (selectedSecondaryAttributes.value.length < 5) {
-    selectedSecondaryAttributes.value.push(attribute);
+  if (attributeStore.addSecondaryAttribute(attribute)) {
     showSecondaryDropdown.value = false;
   }
 };
@@ -102,15 +105,6 @@ const removeAttribute = (
   attribute: Attribute,
   type: "primary" | "secondary",
 ) => {
-  if (type === "primary") {
-    selectedPrimaryAttributes.value = selectedPrimaryAttributes.value.filter(
-      (attr) => attr.id !== attribute.id,
-    );
-  } else {
-    selectedSecondaryAttributes.value =
-      selectedSecondaryAttributes.value.filter(
-        (attr) => attr.id !== attribute.id,
-      );
-  }
+  attributeStore.removeAttribute(attribute, type);
 };
 </script>
