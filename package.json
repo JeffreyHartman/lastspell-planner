@@ -13,6 +13,7 @@
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "@vueuse/core": "^10.11.1",
+    "pinia": "^3.0.1",
     "vue": "^3.4.35",
     "vuedraggable": "^2.24.3"
   },
