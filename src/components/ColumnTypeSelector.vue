@@ -22,7 +22,7 @@
 import { ref, PropType } from "vue";
 import { onClickOutside, onKeyStroke } from "@vueuse/core";
 
-const props = defineProps({
+defineProps({
   currentType: {
     type: String,
     required: true,

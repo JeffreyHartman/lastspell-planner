@@ -1,67 +1,143 @@
 import { defineStore } from "pinia";
-import { Attribute } from "@/types/Attribute";
+import {
+  AttributeGroupKey,
+  AttributePlansById,
+  AttributePlanState,
+} from "@/types/Attribute";
+import {
+  clampStars,
+  getDefaultAttributePlanState,
+  getDefaultHideZeroStarByGroup,
+} from "@/services/attributesService";
 
 export const useAttributeStore = defineStore("attributes", {
   state: () => ({
-    primaryAttributes: [] as Attribute[],
-    secondaryAttributes: [] as Attribute[],
+    attributePlans: {} as AttributePlansById,
+    hideZeroStarByGroup: getDefaultHideZeroStarByGroup(),
   }),
   getters: {
-    allSelectedAttributes: (state) => [
-      ...state.primaryAttributes,
-      ...state.secondaryAttributes,
-    ],
-    selectedAttributeIds(state) {
-      const allAttributes = [
-        ...state.primaryAttributes,
-        ...state.secondaryAttributes,
-      ];
-      return allAttributes.map((attr) => attr.id);
+    getPlan:
+      (state) =>
+      (attributeId: number): AttributePlanState => {
+        return (
+          state.attributePlans[attributeId] ?? getDefaultAttributePlanState()
+        );
+      },
+    totalStarredAttributes: (state): number => {
+      return Object.values(state.attributePlans).filter(
+        (plan) => plan.stars > 0,
+      ).length;
     },
-    isPrimaryFull: (state) => state.primaryAttributes.length >= 5,
-    isSecondaryFull: (state) => state.secondaryAttributes.length >= 5,
-    isAttributeSelected() {
-      return (id: number) => this.selectedAttributeIds.includes(id);
+    isGroupHidingZeroStar:
+      (state) =>
+      (groupKey: AttributeGroupKey): boolean => {
+        return state.hideZeroStarByGroup[groupKey];
+      },
+    allGroupsHideZeroStar(state): boolean {
+      return Object.values(state.hideZeroStarByGroup).every(Boolean);
     },
   },
   actions: {
-    addAttribute(attribute: Attribute, type: "primary" | "secondary") {
-      if (type === "primary") {
-        this.addPrimaryAttribute(attribute);
-      } else {
-        this.addSecondaryAttribute(attribute);
+    ensurePlan(attributeId: number): AttributePlanState {
+      if (!this.attributePlans[attributeId]) {
+        this.attributePlans[attributeId] = getDefaultAttributePlanState();
       }
+      return this.attributePlans[attributeId];
     },
-    addPrimaryAttribute(attribute: Attribute) {
-      if (!this.isPrimaryFull && !this.isAttributeSelected(attribute.id)) {
-        this.primaryAttributes.push(attribute);
-        return true;
-      } else {
-        return false;
+
+    cleanupPlan(attributeId: number) {
+      const plan = this.attributePlans[attributeId];
+
+      if (!plan) return;
+
+      const normalizedPlan: AttributePlanState = {
+        stars: clampStars(plan.stars),
+        minTarget: plan.minTarget.trim(),
+        maxTarget: plan.maxTarget.trim(),
+      };
+
+      if (
+        normalizedPlan.stars === 0 &&
+        !normalizedPlan.minTarget &&
+        !normalizedPlan.maxTarget
+      ) {
+        delete this.attributePlans[attributeId];
+        return;
       }
+
+      this.attributePlans[attributeId] = normalizedPlan;
     },
-    addSecondaryAttribute(attribute: Attribute) {
-      if (!this.isSecondaryFull && !this.isAttributeSelected(attribute.id)) {
-        this.secondaryAttributes.push(attribute);
-        return true;
-      } else {
-        return false;
-      }
+
+    setStars(attributeId: number, stars: number) {
+      const plan = this.ensurePlan(attributeId);
+      plan.stars = clampStars(stars);
+      this.cleanupPlan(attributeId);
     },
-    removeAttribute(attribute: Attribute, type: "primary" | "secondary") {
-      if (type === "primary") {
-        this.primaryAttributes = this.primaryAttributes.filter(
-          (attr) => attr.id !== attribute.id,
-        );
-      } else {
-        this.secondaryAttributes = this.secondaryAttributes.filter(
-          (attr) => attr.id !== attribute.id,
-        );
-      }
+
+    setMinTarget(attributeId: number, minTarget: string) {
+      const plan = this.ensurePlan(attributeId);
+      plan.minTarget = minTarget;
+      this.cleanupPlan(attributeId);
     },
-    clearAttributes() {
-      this.primaryAttributes = [];
-      this.secondaryAttributes = [];
+
+    setMaxTarget(attributeId: number, maxTarget: string) {
+      const plan = this.ensurePlan(attributeId);
+      plan.maxTarget = maxTarget;
+      this.cleanupPlan(attributeId);
+    },
+
+    setRange(attributeId: number, minTarget: string, maxTarget: string) {
+      const plan = this.ensurePlan(attributeId);
+      plan.minTarget = minTarget;
+      plan.maxTarget = maxTarget;
+      this.cleanupPlan(attributeId);
+    },
+
+    setPlans(plans: AttributePlansById) {
+      const normalizedPlans: AttributePlansById = {};
+
+      Object.entries(plans).forEach(([rawId, plan]) => {
+        const attributeId = Number(rawId);
+
+        if (!Number.isInteger(attributeId) || attributeId <= 0) {
+          return;
+        }
+
+        const normalizedPlan: AttributePlanState = {
+          stars: clampStars(plan.stars),
+          minTarget: plan.minTarget?.trim() ?? "",
+          maxTarget: plan.maxTarget?.trim() ?? "",
+        };
+
+        if (
+          normalizedPlan.stars === 0 &&
+          !normalizedPlan.minTarget &&
+          !normalizedPlan.maxTarget
+        ) {
+          return;
+        }
+
+        normalizedPlans[attributeId] = normalizedPlan;
+      });
+
+      this.attributePlans = normalizedPlans;
+    },
+
+    clearPlans() {
+      this.attributePlans = {};
+    },
+
+    setHideZeroStar(groupKey: AttributeGroupKey, hideZeroStar: boolean) {
+      this.hideZeroStarByGroup[groupKey] = hideZeroStar;
+    },
+
+    setAllHideZeroStar(hideZeroStar: boolean) {
+      this.hideZeroStarByGroup = {
+        basic: hideZeroStar,
+        offense: hideZeroStar,
+        defense: hideZeroStar,
+        secondary: hideZeroStar,
+      };
     },
   },
 });

@@ -7,6 +7,24 @@ export interface Attribute {
   description: string;
 }
 
+export type AttributeGroupKey = "basic" | "offense" | "defense" | "secondary";
+
+export interface AttributeGroup {
+  key: AttributeGroupKey;
+  label: string;
+  attributes: Attribute[];
+}
+
+export interface AttributePlanState {
+  stars: number;
+  minTarget: string;
+  maxTarget: string;
+}
+
+export type AttributePlansById = Record<number, AttributePlanState>;
+
+export type HideZeroStarByGroup = Record<AttributeGroupKey, boolean>;
+
 export interface AttributesData {
   primaryAttributes: Attribute[];
   offenseAttributes: Attribute[];
