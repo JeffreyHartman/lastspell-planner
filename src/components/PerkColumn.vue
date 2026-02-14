@@ -1,33 +1,40 @@
 <template>
-  <div class="flex flex-col items-center p-2">
-    <button
-      @click="toggleColumnTypeSelector"
-      class="mb-2 rounded-3xl p-2 text-white"
-      :disabled="!allowTypeSelection"
-    >
-      <img
-        :src="`/assets/icons/${columnType}_Perks_Column_Icon.webp`"
-        :alt="`${columnType} column icon`"
-        :title="`${capitalize(columnType)}`"
-      />
-    </button>
-    <ColumnTypeSelector
-      v-if="showTypeSelector"
-      :position="typeSelectorPosition"
-      :currentType="columnType"
-      @columntype-selected="handleColumnTypeSelected"
-      @close-columntype-selector="showTypeSelector = false"
-    />
-    <div class="flex flex-col items-center space-y-2">
-      <PerkSlot
-        v-for="tier in 5"
-        :key="tier"
-        :perk="getSelectedPerk(tier)"
-        :tier="tier"
-        :columnType="columnType"
-        @select-perk="onSelectPerk"
+  <div class="flex flex-col items-center px-1 sm:px-2">
+    <div class="relative mb-3">
+      <button
+        @click="toggleColumnTypeSelector"
+        class="group flex h-10 w-10 items-center justify-center rounded-full border border-slate-600/50 bg-slate-800/70 transition-all duration-200 hover:border-slate-400/60 hover:shadow-glow-sm disabled:cursor-default disabled:opacity-50 disabled:hover:border-slate-600/50 disabled:hover:shadow-none"
+        :disabled="!allowTypeSelection"
       >
-      </PerkSlot>
+        <img
+          :src="`/assets/icons/${columnType}_Perks_Column_Icon.webp`"
+          :alt="`${columnType} column icon`"
+          :title="capitalize(columnType)"
+          class="h-7 w-7 object-contain"
+        />
+        <span
+          v-if="allowTypeSelection"
+          class="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-amber-500/70"
+        ></span>
+      </button>
+      <ColumnTypeSelector
+        v-if="showTypeSelector"
+        :currentType="columnType"
+        @columntype-selected="handleColumnTypeSelected"
+        @close-columntype-selector="showTypeSelector = false"
+      />
+    </div>
+    <div class="flex flex-col items-center">
+      <template v-for="tier in 5" :key="tier">
+        <div v-if="tier > 1" class="tier-connector"></div>
+        <PerkSlot
+          :perk="getSelectedPerk(tier)"
+          :tier="tier"
+          :columnType="columnType"
+          :searchQuery="searchQuery"
+          @select-perk="onSelectPerk"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -51,26 +58,20 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  searchQuery: {
+    type: String,
+    default: "",
+  },
 });
 const emit = defineEmits(["select-perk", "columntype-selected"]);
 const showTypeSelector = ref(false);
-const typeSelectorPosition = ref({ top: "", left: "" });
 
 const getSelectedPerk = (tier: number) => {
-  console.log(`Getting perk for tier ${tier}, selectedPerks:`, props.selectedPerks);
-  const perk = props.selectedPerks.find((perk) => perk.tier === tier);
-  console.log(`Found perk:`, perk);
-  return perk || null;
+  return props.selectedPerks.find((perk) => perk.tier === tier) || null;
 };
 
-const toggleColumnTypeSelector = (event: MouseEvent) => {
+const toggleColumnTypeSelector = () => {
   showTypeSelector.value = !showTypeSelector.value;
-  if (showTypeSelector.value) {
-    typeSelectorPosition.value = {
-      top: `${event.clientY}px`,
-      left: `${event.clientX}px`,
-    };
-  }
 };
 
 const onSelectPerk = (perk: Perk | null, tier: number) => {
@@ -78,7 +79,6 @@ const onSelectPerk = (perk: Perk | null, tier: number) => {
 };
 
 const handleColumnTypeSelected = (columnType: string) => {
-  console.log("Selected key:", props.columnId);
   emit("columntype-selected", columnType, props.columnId);
   showTypeSelector.value = false;
 };

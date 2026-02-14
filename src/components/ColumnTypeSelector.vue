@@ -1,34 +1,38 @@
 <template>
   <div
-    class="absolute z-10 rounded-md border-opacity-90 bg-gray-800 p-2 shadow-lg"
-    :style="position"
+    class="absolute left-1/2 top-full z-20 mt-1 -translate-x-1/2 animate-fade-in rounded-xl border border-slate-600/40 bg-slate-900/95 p-2 shadow-glass backdrop-blur-sm"
     ref="target"
   >
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-0.5">
       <button
         v-for="columnType in columnTypes"
         :key="columnType"
         @click="selectColumnType(columnType)"
-        class="px-4 py-2 text-left hover:bg-gray-700"
-        :class="{ 'bg-blue-600': currentType === columnType }"
+        class="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-all duration-150"
+        :class="
+          currentType === columnType
+            ? 'border border-amber-500/40 bg-amber-500/15 text-amber-200'
+            : 'border border-transparent text-slate-300 hover:bg-slate-700/60 hover:text-white'
+        "
       >
-        {{ columnType }}
+        <img
+          :src="`/assets/icons/${columnType}_Perks_Column_Icon.webp`"
+          :alt="columnType"
+          class="h-6 w-6 object-contain"
+        />
+        <span class="capitalize">{{ columnType }}</span>
       </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, PropType } from "vue";
+import { ref } from "vue";
 import { onClickOutside, onKeyStroke } from "@vueuse/core";
 
 defineProps({
   currentType: {
     type: String,
-    required: true,
-  },
-  position: {
-    type: Object as PropType<{ top: string; left: string }>,
     required: true,
   },
 });

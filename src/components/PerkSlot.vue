@@ -1,7 +1,12 @@
 <template>
   <div class="relative">
     <div
-      class="perk-slot group flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700"
+      class="perk-slot-circle group"
+      :class="{
+        'perk-slot-circle--active': selectedPerk,
+        'perk-slot-circle--search-match': isSearchMatch,
+        'perk-slot-circle--search-dimmed': isSearchActive && !isSearchMatch,
+      }"
       @click="togglePerkPicker"
       ref="perkSlot"
     >
@@ -9,9 +14,16 @@
         v-if="selectedPerk"
         :src="selectedPerk.icon"
         :alt="selectedPerk.name"
-        class="h-10 w-10"
+        class="h-10 w-10 rounded-full"
       />
+      <span v-else class="h-2 w-2 rounded-full bg-slate-600/60"></span>
       <PerkTooltip v-if="selectedPerk" :perk="selectedPerk" />
+    </div>
+    <div
+      v-if="isSearchMatch && matchingPerkNames.length"
+      class="pointer-events-none absolute left-14 top-1/2 z-10 -translate-y-1/2 whitespace-nowrap rounded bg-slate-800/90 px-2 py-1 text-xs text-blue-300 border border-blue-500/30"
+    >
+      {{ matchingPerkNames.join(', ') }}
     </div>
     <PerkPicker
       v-if="showPerkPicker"
@@ -24,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, PropType, nextTick, watch } from "vue";
+import { computed, ref, PropType, nextTick } from "vue";
 import { Perk } from "../types/Perk";
 import { getPerksByTypeAndTier } from "../services/perkService";
 import PerkPicker from "./PerkPicker.vue";
@@ -43,6 +55,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  searchQuery: {
+    type: String,
+    default: "",
+  },
 });
 
 const emit = defineEmits(["select-perk"]);
@@ -51,24 +67,33 @@ const showPerkPicker = ref(false);
 const perkSlot = ref<HTMLElement | null>(null);
 const pickerPosition = ref({ top: "0px", left: "0px" });
 
-// Use a computed property for the selected perk
 const selectedPerk = computed(() => props.perk);
 
-// Watch for changes in the perk prop
-watch(() => props.perk, (newPerk) => {
-  console.log('Perk changed:', newPerk);
-}, { immediate: true });
+const isSearchActive = computed(() => props.searchQuery.length > 0);
+
+const matchingPerks = computed(() => {
+  if (!isSearchActive.value) return [];
+  const query = props.searchQuery.toLowerCase();
+  return getPerksByTypeAndTier(props.columnType, props.tier).filter((perk) =>
+    perk.name.toLowerCase().includes(query),
+  );
+});
+
+const isSearchMatch = computed(() => matchingPerks.value.length > 0);
+
+const matchingPerkNames = computed(() =>
+  matchingPerks.value.map((perk) => perk.name),
+);
 
 const availablePerks = computed(() => {
   const perks = getPerksByTypeAndTier(props.columnType, props.tier);
-  // Add a 'Clear Perk' option
   const clearPerk: Perk = {
     id: 0,
     name: "Clear Perk",
     tier: 0,
     type: "clear",
     description: "Clears the perk from the column",
-    icon: "/assets/icons/perks/clear.jpg",
+    icon: "/assets/icons/perks/clear.svg",
   };
   perks.push(clearPerk);
   return perks;
@@ -81,17 +106,14 @@ const togglePerkPicker = async () => {
     if (perkSlot.value) {
       pickerPosition.value = {
         top: `0px`,
-        left: `40px`,
+        left: `52px`,
       };
     }
   }
 };
 
 const handleSelectPerk = (perk: Perk) => {
-  // Emit the event to the parent with the tier
   emit("select-perk", perk.id === 0 ? null : perk, props.tier);
-
-  // Close the picker
   showPerkPicker.value = false;
 };
 </script>

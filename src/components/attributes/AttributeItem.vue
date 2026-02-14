@@ -1,20 +1,28 @@
 <template>
-  <div class="flex items-center space-x-1">
-    <img :src="attribute.icon" alt="attribute icon" />
-    <span class="group relative">
+  <div class="flex items-center gap-1.5">
+    <img
+      :src="attribute.icon"
+      :alt="`${attribute.name} icon`"
+      class="h-6 w-6 object-contain"
+    />
+    <span class="group relative text-sm text-slate-200">
       {{ attribute.name }}
 
       <!-- Tooltip -->
       <div
         v-if="showTooltip"
-        class="absolute left-full z-10 ml-2 hidden w-64 rounded-md bg-gray-900 p-2 text-sm text-white shadow-lg group-hover:block"
+        class="pointer-events-none absolute left-full z-30 ml-2 hidden w-64 animate-fade-in rounded-lg border border-amber-500/25 bg-slate-900/95 p-3 text-sm text-white shadow-glass backdrop-blur-sm group-hover:block"
       >
-        <h3 class="mb-1 font-bold">{{ attribute.name }}</h3>
+        <h3 class="mb-1 font-bold text-amber-200">{{ attribute.name }}</h3>
         <div class="mb-1 text-xs">
-          <span class="text-gray-400">Range: </span>
-          {{ attribute.min }} - {{ attribute.max }}
+          <span class="text-slate-400">Range: </span>
+          <span class="text-slate-200"
+            >{{ attribute.min }} - {{ attribute.max }}</span
+          >
         </div>
-        <p class="text-xs">{{ attribute.description }}</p>
+        <p class="text-xs leading-relaxed text-slate-300">
+          {{ attribute.description }}
+        </p>
       </div>
     </span>
   </div>

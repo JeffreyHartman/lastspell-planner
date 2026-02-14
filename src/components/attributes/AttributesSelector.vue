@@ -1,7 +1,5 @@
 <template>
-  <section
-    class="m-2 rounded-xl border border-slate-700/70 bg-slate-900/65 p-4"
-  >
+  <section class="glass-panel p-4">
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <div>
         <h3 class="text-2xl font-bold text-white">Attributes Priorities</h3>
@@ -12,7 +10,7 @@
 
       <button
         type="button"
-        class="inline-flex items-center gap-2 rounded-md border border-slate-600 bg-slate-800/90 px-3 py-2 text-xs font-semibold text-slate-100 transition-colors hover:bg-slate-700"
+        class="btn text-xs"
         @click="toggleAllGroupsZeroStarVisibility"
       >
         <component
@@ -27,7 +25,7 @@
       <article
         v-for="group in attributeGroups"
         :key="group.key"
-        class="min-w-0 rounded-lg border border-slate-700/80 bg-slate-800/70 p-3"
+        class="glass-card min-w-0 p-3"
       >
         <header class="mb-3 flex items-center justify-between gap-2">
           <div>
@@ -41,7 +39,7 @@
 
           <button
             type="button"
-            class="inline-flex items-center gap-1 rounded border border-slate-600 px-2 py-1 text-[11px] font-semibold text-slate-200 transition-colors hover:bg-slate-700"
+            class="btn py-1 text-[11px]"
             @click="toggleGroupZeroStarVisibility(group.key)"
           >
             <component
@@ -65,16 +63,16 @@
           <div
             v-for="attribute in getVisibleAttributes(group)"
             :key="attribute.id"
-            class="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-2 gap-y-1 rounded-md border border-slate-700/80 bg-slate-900/60 px-2 py-1.5"
+            class="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-2 gap-y-1 rounded-lg border border-slate-700/40 bg-slate-900/50 px-2.5 py-2 transition-colors duration-150 hover:border-slate-600/50"
           >
             <div
-              class="group relative row-span-2 flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-slate-500/70 bg-slate-600/80"
+              class="group relative row-span-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-600/50 bg-slate-700/60 transition-colors duration-150"
               :title="attribute.name"
             >
               <img
                 :src="attribute.icon"
                 :alt="`${attribute.name} icon`"
-                class="h-7 w-7 object-contain"
+                class="h-8 w-8 object-contain"
                 loading="lazy"
               />
               <HoverTooltip
@@ -90,7 +88,7 @@
                 v-for="star in 3"
                 :key="`a${attribute.id}-s${star}`"
                 type="button"
-                class="rounded p-0.5 text-amber-400 transition-colors hover:bg-slate-700"
+                class="rounded-md p-0.5 text-amber-400 transition-all duration-150 hover:scale-110 hover:bg-slate-700/60 active:scale-95"
                 :aria-label="`Set ${attribute.name} importance to ${star} stars`"
                 @click="setStars(attribute.id, star)"
               >
@@ -109,7 +107,7 @@
                 type="text"
                 :placeholder="attribute.min"
                 :value="getMinTarget(attribute.id)"
-                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-amber-500 focus:outline-none"
+                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
                 @input="onMinTargetInput(attribute.id, $event)"
               />
               <span class="text-[10px] font-semibold uppercase text-slate-500"
@@ -119,7 +117,7 @@
                 type="text"
                 :placeholder="attribute.max"
                 :value="getMaxTarget(attribute.id)"
-                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-amber-500 focus:outline-none"
+                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
                 @input="onMaxTargetInput(attribute.id, $event)"
               />
             </div>

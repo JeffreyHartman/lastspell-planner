@@ -1,10 +1,10 @@
 <template>
   <div
-    class="absolute z-10 rounded-md border-opacity-90 bg-gray-800 p-2 shadow-lg"
+    class="absolute z-20 animate-scale-in rounded-xl border border-slate-600/40 bg-slate-900/95 p-3 shadow-glass backdrop-blur-sm"
     :style="{ ...position, width: pickerWidth }"
     ref="target"
   >
-    <div v-if="perks.length === 0" class="whitespace-nowrap px-2 text-white">
+    <div v-if="perks.length === 0" class="whitespace-nowrap px-2 text-sm text-slate-400">
       No perks available
     </div>
     <div v-else class="flex flex-wrap gap-2">
@@ -19,7 +19,7 @@
         <img
           :src="perk.icon"
           :alt="perk.name"
-          class="h-8 w-8 cursor-pointer rounded-md hover:ring-2 hover:ring-blue-500"
+          class="h-10 w-10 cursor-pointer rounded-lg border border-transparent transition-all duration-150 hover:border-amber-500/50 hover:shadow-glow-amber"
         />
         <PerkTooltip :perk="perk" />
       </div>
@@ -67,7 +67,7 @@ const selectPerk = (perk: Perk) => {
 
 const pickerWidth = computed(() => {
   const perksCount = props.perks.length;
-  const columns = Math.min(perksCount, 5); // Max 5 columns
-  return `${columns * 40 + (columns - 1) * 8 + 16}px`; // 40px for each icon, 8px gap, 16px for padding
+  const columns = Math.min(perksCount, 5);
+  return `${columns * 48 + (columns - 1) * 8 + 24}px`;
 });
 </script>

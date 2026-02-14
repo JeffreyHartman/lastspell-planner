@@ -1,19 +1,46 @@
 <template>
-  <div class="flex justify-center">
-    <PerkColumn
-      v-for="column in perkColumns"
-      :columnId="column.id"
-      :columnType="column.type"
-      :selectedPerks="column.perks"
-      @select-perk="onSelectPerk"
-      @columntype-selected="onColumnTypeSelected"
-    />
+  <div class="glass-panel p-4">
+    <div class="mb-3 flex items-center justify-between">
+      <div class="relative">
+        <MagnifyingGlassIcon class="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Search perks..."
+          class="w-48 rounded-lg border border-slate-600/60 bg-slate-800/80 py-1.5 pl-8 pr-8 text-sm text-slate-100 placeholder-slate-500 outline-none transition-colors focus:border-blue-500/60"
+        />
+        <button
+          v-if="searchQuery"
+          type="button"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
+          @click="searchQuery = ''"
+        >
+          <XMarkIcon class="h-4 w-4" />
+        </button>
+      </div>
+      <button type="button" class="btn btn--danger text-xs" @click="resetPerks">
+        <ArrowPathIcon class="h-4 w-4" />
+        Reset Perks
+      </button>
+    </div>
+
+    <div class="flex justify-center gap-1 pb-2 sm:gap-2">
+      <PerkColumn
+        v-for="column in perkColumns"
+        :columnId="column.id"
+        :columnType="column.type"
+        :selectedPerks="column.perks"
+        :searchQuery="searchQuery"
+        @select-perk="onSelectPerk"
+        @columntype-selected="onColumnTypeSelected"
+      />
+    </div>
   </div>
-  <button @click="resetPerks">Reset Perks</button>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
+import { ArrowPathIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import PerkColumn from "./PerkColumn.vue";
 import { PerkColumnType } from "../types/PerkColumn";
 import { Perk } from "../types/Perk";
@@ -22,6 +49,8 @@ import { getPerkById } from "../services/perkService";
 const emit = defineEmits<{
   (event: "state-changed"): void;
 }>();
+
+const searchQuery = ref("");
 
 const DEFAULT_COLUMN_TYPES = [
   "melee",
