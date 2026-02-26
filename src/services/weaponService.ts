@@ -1,5 +1,5 @@
 import weaponsData from "../weapons.json";
-import type { Weapon, WeaponHandedness, WeaponSetsState, WeaponSetState } from "../types/Weapon";
+import type { Weapon, RankedWeapon, WeaponRankingsState } from "../types/Weapon";
 
 const weapons = weaponsData as Weapon[];
 
@@ -10,77 +10,81 @@ export const getAllWeapons = (): Weapon[] => [...weapons];
 export const getWeaponById = (id: string): Weapon | undefined =>
   WEAPON_BY_ID.get(id);
 
-export const getMainHandWeapons = (): Weapon[] =>
-  weapons.filter((w) => w.handedness !== "oh");
+export const clampWeaponStars = (stars: number): number =>
+  Math.max(0, Math.min(3, Math.floor(stars)));
 
-export const getOffHandWeapons = (): Weapon[] =>
-  weapons.filter((w) => w.handedness === "oh");
-
-export const getWeaponsByHandedness = (handedness: WeaponHandedness): Weapon[] =>
-  weapons.filter((w) => w.handedness === handedness);
-
-export const getDefaultWeaponSetState = (): WeaponSetState => ({
-  primaryId: null,
-  offhandId: null,
-});
-
-export const getDefaultWeaponSetsState = (): WeaponSetsState => ({
-  sets: [getDefaultWeaponSetState(), getDefaultWeaponSetState()],
+export const getDefaultWeaponRankingsState = (): WeaponRankingsState => ({
+  weapons: [],
 });
 
 /**
- * URL format: primaryId,offhandId;primaryId,offhandId
- * Empty slots omitted, trailing empties trimmed.
- * Example: sword,offhand-dagger;longbow
+ * New URL format: weaponId~stars;weaponId~stars;...
+ * Example: sword~3;longbow~2
  */
-export const encodeWeaponsForUrl = (state: WeaponSetsState): string => {
-  const parts = state.sets.map((set) => {
-    const primary = set.primaryId ?? "";
-    const offhand = set.offhandId ?? "";
-    if (!primary && !offhand) return "";
-    if (!offhand) return primary;
-    return `${primary},${offhand}`;
-  });
-
-  // Trim trailing empty sets
-  while (parts.length > 0 && parts[parts.length - 1] === "") {
-    parts.pop();
-  }
-
-  return parts.join(";");
+export const encodeWeaponsForUrl = (state: WeaponRankingsState): string => {
+  if (state.weapons.length === 0) return "";
+  return state.weapons
+    .map((w) => (w.stars > 0 ? `${w.weaponId}~${w.stars}` : w.weaponId))
+    .join(";");
 };
 
-export const decodeWeaponsFromUrl = (encoded: string): WeaponSetsState => {
-  const state = getDefaultWeaponSetsState();
-  if (!encoded) return state;
+/**
+ * Detect legacy format by checking for commas.
+ * Old format: primaryId,offhandId;primaryId,offhandId
+ */
+const isLegacyFormat = (encoded: string): boolean => encoded.includes(",");
 
-  const setParts = encoded.split(";");
-  for (let i = 0; i < Math.min(setParts.length, 2); i++) {
-    const part = setParts[i];
-    if (!part) continue;
+/**
+ * Decode legacy format: splits by ; then ,, extracts all valid weapon IDs with 0 stars.
+ */
+const decodeLegacyWeapons = (encoded: string): RankedWeapon[] => {
+  const seen = new Set<string>();
+  const result: RankedWeapon[] = [];
 
-    const [primaryId = "", offhandId = ""] = part.split(",");
-
-    if (primaryId && WEAPON_BY_ID.has(primaryId)) {
-      const weapon = WEAPON_BY_ID.get(primaryId)!;
-      if (weapon.handedness !== "oh") {
-        state.sets[i].primaryId = primaryId;
-      }
-    }
-
-    if (offhandId && WEAPON_BY_ID.has(offhandId)) {
-      const weapon = WEAPON_BY_ID.get(offhandId)!;
-      if (weapon.handedness === "oh") {
-        // Only allow off-hand if primary is 1h
-        const primary = state.sets[i].primaryId
-          ? WEAPON_BY_ID.get(state.sets[i].primaryId!)
-          : null;
-        if (primary && primary.handedness === "1h") {
-          state.sets[i].offhandId = offhandId;
-        }
+  for (const setPart of encoded.split(";")) {
+    if (!setPart) continue;
+    for (const id of setPart.split(",")) {
+      const trimmed = id.trim();
+      if (trimmed && WEAPON_BY_ID.has(trimmed) && !seen.has(trimmed)) {
+        seen.add(trimmed);
+        result.push({ weaponId: trimmed, stars: 0 });
       }
     }
   }
 
-  return state;
+  return result;
+};
+
+/**
+ * Decode new format: splits by ; then ~, extracts weaponId and stars.
+ * A bare ID like "longbow" (no tilde) defaults to 0 stars.
+ */
+const decodeNewWeapons = (encoded: string): RankedWeapon[] => {
+  const seen = new Set<string>();
+  const result: RankedWeapon[] = [];
+
+  for (const part of encoded.split(";")) {
+    if (!part) continue;
+    const tildeIdx = part.indexOf("~");
+    const weaponId = tildeIdx === -1 ? part : part.slice(0, tildeIdx);
+    const stars =
+      tildeIdx === -1 ? 0 : clampWeaponStars(parseInt(part.slice(tildeIdx + 1), 10) || 0);
+
+    if (weaponId && WEAPON_BY_ID.has(weaponId) && !seen.has(weaponId)) {
+      seen.add(weaponId);
+      result.push({ weaponId, stars });
+    }
+  }
+
+  return result;
+};
+
+export const decodeWeaponsFromUrl = (encoded: string): WeaponRankingsState => {
+  if (!encoded) return getDefaultWeaponRankingsState();
+
+  const weapons = isLegacyFormat(encoded)
+    ? decodeLegacyWeapons(encoded)
+    : decodeNewWeapons(encoded);
+
+  return { weapons };
 };

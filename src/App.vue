@@ -16,7 +16,7 @@
     <div
       class="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_280px] xl:items-start"
     >
-      <main class="min-w-0">
+      <main class="relative z-10 min-w-0">
         <section class="glass-panel mb-6 p-4 text-left">
           <div class="flex flex-wrap items-center gap-2">
             <button
@@ -108,9 +108,6 @@
             @click="loadSavedBuild(build)"
           >
             <span class="truncate text-sm font-semibold">{{ build.name }}</span>
-            <span class="text-xs text-slate-400">{{
-              formatUpdatedAt(build.updatedAt)
-            }}</span>
           </button>
         </div>
       </aside>
@@ -218,20 +215,7 @@ onMounted(() => {
   }
 });
 
-const formatUpdatedAt = (updatedAt: string): string => {
-  const parsedDate = new Date(updatedAt);
 
-  if (Number.isNaN(parsedDate.getTime())) {
-    return "Saved locally";
-  }
-
-  return parsedDate.toLocaleString(undefined, {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};
 </script>
 
 <style scoped>

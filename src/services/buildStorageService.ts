@@ -64,9 +64,9 @@ const normalizeStoredBuild = (rawValue: unknown): SavedBuild | null => {
   };
 };
 
-const sortBuildsByUpdatedAt = (builds: SavedBuild[]): SavedBuild[] => {
+const sortBuildsAlphabetically = (builds: SavedBuild[]): SavedBuild[] => {
   return [...builds].sort((leftBuild, rightBuild) => {
-    return rightBuild.updatedAt.localeCompare(leftBuild.updatedAt);
+    return leftBuild.name.localeCompare(rightBuild.name);
   });
 };
 
@@ -86,7 +86,7 @@ export const getSavedBuilds = (): SavedBuild[] => {
       return [];
     }
 
-    return sortBuildsByUpdatedAt(
+    return sortBuildsAlphabetically(
       parsedValue
         .map((rawBuild) => normalizeStoredBuild(rawBuild))
         .filter((build): build is SavedBuild => Boolean(build)),

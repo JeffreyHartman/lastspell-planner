@@ -1,64 +1,53 @@
 import { defineStore } from "pinia";
-import type { WeaponSetsState, WeaponSetState } from "@/types/Weapon";
-import { getDefaultWeaponSetsState, getWeaponById } from "@/services/weaponService";
+import type { RankedWeapon, WeaponRankingsState } from "@/types/Weapon";
+import {
+  clampWeaponStars,
+  getDefaultWeaponRankingsState,
+} from "@/services/weaponService";
 
 export const useWeaponStore = defineStore("weapons", {
-  state: (): WeaponSetsState => getDefaultWeaponSetsState(),
+  state: (): WeaponRankingsState => getDefaultWeaponRankingsState(),
 
   getters: {
-    getSet:
+    getWeaponAt:
       (state) =>
-      (index: number): WeaponSetState =>
-        state.sets[index] ?? { primaryId: null, offhandId: null },
+      (index: number): RankedWeapon | undefined =>
+        state.weapons[index],
 
-    isOffhandDisabled:
+    hasWeapon:
       (state) =>
-      (setIndex: number): boolean => {
-        const primary = state.sets[setIndex]?.primaryId;
-        if (!primary) return true;
-        const weapon = getWeaponById(primary);
-        return !weapon || weapon.handedness === "2h";
-      },
+      (weaponId: string): boolean =>
+        state.weapons.some((w) => w.weaponId === weaponId),
   },
 
   actions: {
-    setPrimary(setIndex: number, weaponId: string | null) {
-      const set = this.sets[setIndex];
-      if (!set) return;
+    addWeapon(weaponId: string, stars: number = 0) {
+      if (this.hasWeapon(weaponId)) return;
+      this.weapons.push({ weaponId, stars: clampWeaponStars(stars) });
+    },
 
-      set.primaryId = weaponId;
+    removeWeapon(weaponId: string) {
+      this.weapons = this.weapons.filter((w) => w.weaponId !== weaponId);
+    },
 
-      // Auto-clear off-hand when switching to 2h or empty
-      if (!weaponId) {
-        set.offhandId = null;
-      } else {
-        const weapon = getWeaponById(weaponId);
-        if (!weapon || weapon.handedness === "2h") {
-          set.offhandId = null;
-        }
+    setStars(weaponId: string, stars: number) {
+      const weapon = this.weapons.find((w) => w.weaponId === weaponId);
+      if (weapon) {
+        weapon.stars = clampWeaponStars(stars);
       }
     },
 
-    setOffhand(setIndex: number, weaponId: string | null) {
-      const set = this.sets[setIndex];
-      if (!set) return;
-
-      // Only allow off-hand if primary is 1h
-      if (this.isOffhandDisabled(setIndex)) {
-        set.offhandId = null;
-        return;
-      }
-
-      set.offhandId = weaponId;
-    },
-
-    setSets(state: WeaponSetsState) {
-      this.sets = state.sets;
+    setWeapons(state: WeaponRankingsState) {
+      const seen = new Set<string>();
+      this.weapons = state.weapons.filter((w) => {
+        if (seen.has(w.weaponId)) return false;
+        seen.add(w.weaponId);
+        return true;
+      });
     },
 
     clearAll() {
-      const defaults = getDefaultWeaponSetsState();
-      this.sets = defaults.sets;
+      this.weapons = [];
     },
   },
 });

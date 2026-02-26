@@ -11,11 +11,11 @@ export interface Weapon {
   dlc: WeaponDlc;
 }
 
-export interface WeaponSetState {
-  primaryId: string | null;
-  offhandId: string | null;
+export interface RankedWeapon {
+  weaponId: string;
+  stars: number; // 0-3
 }
 
-export interface WeaponSetsState {
-  sets: [WeaponSetState, WeaponSetState];
+export interface WeaponRankingsState {
+  weapons: RankedWeapon[];
 }

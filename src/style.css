@@ -88,18 +88,4 @@
     @apply border-amber-600/40 text-amber-200 hover:border-amber-500/60 hover:bg-amber-900/20;
   }
 
-  .weapon-slot {
-    @apply flex h-14 w-14 items-center justify-center rounded-lg
-      border-2 border-slate-600/60 bg-slate-800/80
-      transition-all duration-200 ease-out
-      hover:border-slate-400/60 hover:shadow-glow-sm;
-  }
-
-  .weapon-slot--selected {
-    @apply border-amber-500/50 shadow-glow-amber;
-  }
-
-  .weapon-slot--disabled {
-    @apply cursor-not-allowed opacity-40 hover:border-slate-600/60 hover:shadow-none;
-  }
 }

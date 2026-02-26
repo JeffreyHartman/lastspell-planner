@@ -1,38 +1,76 @@
 <template>
   <section
     class="glass-panel overflow-visible p-4"
-    :class="{ 'relative z-20': dropdownOpen }"
+    :class="{ 'relative z-20': showDropdown }"
   >
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h3 class="text-2xl font-bold text-white">Weapon Loadout</h3>
+        <h3 class="text-2xl font-bold text-white">Weapons</h3>
         <p class="text-xs text-slate-300">
-          Select primary and off-hand weapons for each weapon set.
+          Add weapons and rate them 0–3 stars to indicate build priority.
         </p>
       </div>
 
-      <button type="button" class="btn btn--danger text-xs" @click="resetAll">
+      <button
+        type="button"
+        class="btn btn--danger text-xs"
+        @click="weaponStore.clearAll()"
+      >
         <XMarkIcon class="h-4 w-4" />
         Clear Weapons
       </button>
     </div>
 
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-      <WeaponSet :set-index="0" label="Weapon Set 1" @dropdown-toggle="onDropdownToggle" />
-      <WeaponSet :set-index="1" label="Weapon Set 2" @dropdown-toggle="onDropdownToggle" />
+    <div class="space-y-2">
+      <WeaponRankItem
+        v-for="rw in weaponStore.weapons"
+        :key="rw.weaponId"
+        :weapon-id="rw.weaponId"
+        :stars="rw.stars"
+        @set-stars="(s) => weaponStore.setStars(rw.weaponId, s)"
+        @remove="weaponStore.removeWeapon(rw.weaponId)"
+      />
+
+      <div
+        v-if="weaponStore.weapons.length === 0"
+        class="rounded-md border border-dashed border-slate-600 p-4 text-center text-sm text-slate-400"
+      >
+        No weapons selected. Click "Add Weapon" to get started.
+      </div>
+    </div>
+
+    <div class="relative mt-3">
+      <button
+        type="button"
+        class="btn btn--primary text-xs"
+        @click="toggleDropdown"
+      >
+        <PlusIcon class="h-4 w-4" />
+        Add Weapon
+      </button>
+
+      <WeaponDropdown
+        v-if="showDropdown"
+        :weapons="availableWeapons"
+        @select="onWeaponSelected"
+        @close="showDropdown = false"
+      />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
-import { XMarkIcon } from "@heroicons/vue/24/outline";
+import { computed, onMounted, ref, watch } from "vue";
+import { XMarkIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { useWeaponStore } from "@/stores/weaponStore";
 import {
   encodeWeaponsForUrl,
   decodeWeaponsFromUrl,
+  getAllWeapons,
 } from "@/services/weaponService";
-import WeaponSet from "./WeaponSet.vue";
+import type { Weapon } from "@/types/Weapon";
+import WeaponRankItem from "./WeaponRankItem.vue";
+import WeaponDropdown from "./WeaponDropdown.vue";
 
 const emit = defineEmits<{
   (event: "state-changed"): void;
@@ -40,10 +78,23 @@ const emit = defineEmits<{
 
 const weaponStore = useWeaponStore();
 const isHydratingFromUrl = ref(true);
-const dropdownOpen = ref(false);
+const showDropdown = ref(false);
 
-const onDropdownToggle = (open: boolean) => {
-  dropdownOpen.value = open;
+const allWeapons = getAllWeapons();
+
+const availableWeapons = computed(() =>
+  allWeapons.filter((w) => !weaponStore.hasWeapon(w.id)),
+);
+
+const toggleDropdown = () => {
+  showDropdown.value = !showDropdown.value;
+};
+
+const onWeaponSelected = (weapon: Weapon | null) => {
+  if (weapon) {
+    weaponStore.addWeapon(weapon.id, 0);
+  }
+  showDropdown.value = false;
 };
 
 const syncWeaponsToUrl = () => {
@@ -66,7 +117,7 @@ onMounted(() => {
   const encoded = params.get("wpns");
 
   if (encoded) {
-    weaponStore.setSets(decodeWeaponsFromUrl(encoded));
+    weaponStore.setWeapons(decodeWeaponsFromUrl(encoded));
   } else {
     weaponStore.clearAll();
   }
@@ -76,7 +127,7 @@ onMounted(() => {
 });
 
 watch(
-  () => weaponStore.sets,
+  () => weaponStore.weapons,
   () => {
     if (isHydratingFromUrl.value) return;
     syncWeaponsToUrl();
@@ -84,8 +135,4 @@ watch(
   },
   { deep: true },
 );
-
-const resetAll = () => {
-  weaponStore.clearAll();
-};
 </script>
