@@ -4,7 +4,10 @@
     :style="{ ...position, width: pickerWidth }"
     ref="target"
   >
-    <div v-if="perks.length === 0" class="whitespace-nowrap px-2 text-sm text-slate-400">
+    <div
+      v-if="perks.length === 0"
+      class="whitespace-nowrap px-2 text-sm text-slate-400"
+    >
       No perks available
     </div>
     <div v-else class="flex flex-wrap gap-2">
@@ -20,6 +23,7 @@
           :src="perk.icon"
           :alt="perk.name"
           class="h-10 w-10 cursor-pointer rounded-lg border border-transparent transition-all duration-150 hover:border-amber-500/50 hover:shadow-glow-amber"
+          :class="{ 'bg-slate-100 p-1': isPlaceholderIcon(perk.icon) }"
         />
         <PerkTooltip :perk="perk" />
       </div>
@@ -70,4 +74,8 @@ const pickerWidth = computed(() => {
   const columns = Math.min(perksCount, 5);
   return `${columns * 48 + (columns - 1) * 8 + 24}px`;
 });
+
+const isPlaceholderIcon = (iconPath: string) => {
+  return iconPath.includes("raw.githubusercontent.com/tailwindlabs/heroicons");
+};
 </script>

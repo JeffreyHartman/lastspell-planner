@@ -11,12 +11,12 @@
 - [x] Add static perk data and icon mappings.
 - [x] Build an attribute selector UI with primary and secondary sections.
 - [x] Add Pinia attribute store rules (max count and duplicate prevention).
-- [x] Add attribute data, icons, and tooltip details.
+- [x] Add attribute data, icons, and ftooltip details.
 
 ## Left to do
 
-- [ ] Wire selected attributes into URL serialization/deserialization.
-- [ ] Define a more compact, BBPlanner-style share URL encoding.
+- [x] Wire selected attributes into URL serialization/deserialization.
+- [x] Define a more compact, BBPlanner-style share URL encoding.
 - [ ] Add explicit share UX (for example: copy link button and import feedback).
 - [ ] Restrict/filter attribute dropdown options by context (`primary` vs `secondary` intent).
 - [ ] Remove debug `console.log` statements in UI components.

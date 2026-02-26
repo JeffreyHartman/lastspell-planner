@@ -9,7 +9,7 @@
         The Last Spell Planner
       </h1>
       <p class="mt-1 text-sm tracking-wide text-slate-400">
-        Plan your perks and attributes
+        Plan your perks, weapons, and attributes
       </p>
     </header>
 
@@ -72,6 +72,12 @@
           @state-changed="onPlannerStateChanged"
         />
 
+        <h2 class="section-header mt-8">Weapons</h2>
+        <WeaponSelector
+          :key="`wpns-${plannerStateKey}`"
+          @state-changed="onPlannerStateChanged"
+        />
+
         <h2 class="section-header mt-8">Attributes</h2>
         <AttributesSelector
           :key="`attrs-${plannerStateKey}`"
@@ -121,6 +127,7 @@ import {
 import { HeartIcon as HeartSolidIcon } from "@heroicons/vue/24/solid";
 
 import PerkTree from "./components/PerkTree.vue";
+import WeaponSelector from "./components/weapons/WeaponSelector.vue";
 import AttributesSelector from "./components/attributes/AttributesSelector.vue";
 import {
   SavedBuild,

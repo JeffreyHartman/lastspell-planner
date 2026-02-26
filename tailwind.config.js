@@ -12,6 +12,7 @@ export default {
         glow: {
           amber: "rgba(245, 158, 11, 0.40)",
           blue: "rgba(59, 130, 246, 0.35)",
+          emerald: "rgba(16, 185, 129, 0.40)",
         },
       },
       backdropBlur: {
@@ -19,6 +20,7 @@ export default {
       },
       boxShadow: {
         "glow-amber": "0 0 12px 2px rgba(245, 158, 11, 0.35)",
+        "glow-emerald": "0 0 12px 2px rgba(16, 185, 129, 0.35)",
         "glow-blue": "0 0 10px 2px rgba(59, 130, 246, 0.25)",
         "glow-sm": "0 0 6px 1px rgba(148, 163, 184, 0.15)",
         glass: "0 4px 30px rgba(0, 0, 0, 0.3)",

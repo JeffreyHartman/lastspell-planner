@@ -1,6 +1,7 @@
-import { Perk } from "./Perk";
+import { SelectedPerk } from "./SelectedPerk";
+
 export interface PerkColumnType {
   id: number;
   type: string;
-  perks: Perk[];
+  perks: SelectedPerk[];
 }

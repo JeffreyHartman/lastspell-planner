@@ -598,5 +598,165 @@
     "name": "Big Game Hunter",
     "tier": 5,
     "description": "When attacking a enemy with 600 max Health, the attack gets: +20% Total Damage, increased by +2% for every 120 additional max Health, up to +50%. (Total Damage is applied applied after Damage, but before Resistance, Block and Critical)"
+  },
+  {
+    "id": 76,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/beaker.svg",
+    "type": "dwarf",
+    "name": "Jolly Drinker",
+    "tier": 1,
+    "description": "Whenever a potion is used on the Hero: restore 2 Move Points."
+  },
+  {
+    "id": 77,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/trophy.svg",
+    "type": "dwarf",
+    "name": "Bodycount Contest",
+    "tier": 1,
+    "description": "As long as there is a Hero in a range of 12, killing an enemy grants +20% Experience Gain."
+  },
+  {
+    "id": 78,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg",
+    "type": "dwarf",
+    "name": "Thickness",
+    "tier": 2,
+    "description": "Every +9% Damage grants +4% Resistance."
+  },
+  {
+    "id": 79,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/fire.svg",
+    "type": "dwarf",
+    "name": "Carnage",
+    "tier": 2,
+    "description": "Whenever at least 5 enemies are hit with a single attack: restore 1 Move Point and gain +5% Damage for 2 turns."
+  },
+  {
+    "id": 80,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg",
+    "type": "dwarf",
+    "name": "Hard As a Rock",
+    "tier": 3,
+    "description": "Whenever an enemy is killed: gain +1 Block for 1 turn."
+  },
+  {
+    "id": 81,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/arrow-trending-up.svg",
+    "type": "dwarf",
+    "name": "Look At My Muscles",
+    "tier": 3,
+    "description": "+1 use (limit per turn) on every skill provided by equipped weapon sets. Disables the body armor slot."
+  },
+  {
+    "id": 82,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/megaphone.svg",
+    "type": "dwarf",
+    "name": "You're next!",
+    "tier": 4,
+    "description": "Every 2 enemies hit: apply -12% Resistance for 2 turns to a random enemy within a range of 6."
+  },
+  {
+    "id": 83,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/arrow-path.svg",
+    "type": "dwarf",
+    "name": "Emergency Tunnel",
+    "tier": 4,
+    "description": "Unlocks Emergency Tunnel, allowing the Hero to teleport to a Haven tile. Emergency Tunnel: costs 15 Health, range anywhere, targets 1, 2 uses per night, 1 use per turn, Maneuver, No Momentum."
+  },
+  {
+    "id": 84,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/heart.svg",
+    "type": "dwarf",
+    "name": "Heart Of The Party",
+    "tier": 5,
+    "description": "Every 200 damage inflicted this turn (excluding overkill): grant +7 Armor for 1 turn to all Heroes."
+  },
+  {
+    "id": 85,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/megaphone.svg",
+    "type": "dwarf",
+    "name": "Warcry",
+    "tier": 5,
+    "description": "Every 15 missing Armor or Health: grant +1% Damage for 1 turn to all Heroes at the start of the Heroes' turn."
+  },
+  {
+    "id": 86,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/beaker.svg",
+    "type": "elf",
+    "name": "Coffee Infused",
+    "tier": 1,
+    "description": "Unlocks Elven Coffee, allowing the Hero to restore all Move Points. +1 use per night for every 4 Hero levels."
+  },
+  {
+    "id": 87,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sun.svg",
+    "type": "elf",
+    "name": "Urban Hate",
+    "tier": 1,
+    "description": "Every 15 unoccupied tiles in the Haven after 270 grants +8% Experience Gain and +2 Daily Mana Regen."
+  },
+  {
+    "id": 88,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sparkles.svg",
+    "type": "elf",
+    "name": "One with Nature",
+    "tier": 2,
+    "description": "For every empty equipment slot (consumables do not count), gain 1 stack. At 1+ stacks: +5% Damage per stack. At 2+ stacks: +4% Dodge per stack. At 4+ stacks: +1 Action Point per 4 stacks. At 9 stacks: Punch gains +100% Perk Damage."
+  },
+  {
+    "id": 89,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/eye.svg",
+    "type": "elf",
+    "name": "Sentry",
+    "tier": 2,
+    "description": "As long as no other Hero is within a range of 12, all skills get Vision."
+  },
+  {
+    "id": 90,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/trophy.svg",
+    "type": "elf",
+    "name": "Deadly Ranger",
+    "tier": 3,
+    "description": "For each one-handed weapon equipped: +10% Critical Power, increased by 6% every 5 Hero levels. For each two-handed weapon equipped: +6% Critical, increased by 3% every 5 Hero levels."
+  },
+  {
+    "id": 91,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/bolt.svg",
+    "type": "elf",
+    "name": "Flicker Strike",
+    "tier": 3,
+    "description": "Follow and Maneuver skills gain +15% Perk Damage, increased by 8% for each tile of distance between the Hero and the unit."
+  },
+  {
+    "id": 92,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg",
+    "type": "elf",
+    "name": "Elusive",
+    "tier": 4,
+    "description": "All Armor is transformed into Dodge (30% conversion). After enemy attacks, each dodge auto-casts Shadow Waltz on a random enemy in range 5 with base damage 10 + 50% Dodge; the last dodge casts Twilight Flourish with base damage 30 + 175% Dodge."
+  },
+  {
+    "id": 93,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/bug-ant.svg",
+    "type": "elf",
+    "name": "Infectious Strikes",
+    "tier": 4,
+    "description": "+20% Stun Chance. Whenever an enemy with a negative alteration is hit: apply 40 Poison for 2 turns."
+  },
+  {
+    "id": 94,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/arrow-trending-up.svg",
+    "type": "elf",
+    "name": "Hunter's Arsenal",
+    "tier": 5,
+    "description": "Every 5% Ranged Damage after 100: non-Momentum attacks using Physical Damage gain 3% Momentum; non-Poison attacks using Magic Damage apply 20 Poison for 2 turns."
+  },
+  {
+    "id": 95,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sparkles.svg",
+    "type": "elf",
+    "name": "War Dance",
+    "tier": 5,
+    "description": "At the end of an attack, if exactly one unit was hit, automatically cast Pirouettes on an enemy in range 2 with base damage 25 + 90% Dodge."
   }
 ]

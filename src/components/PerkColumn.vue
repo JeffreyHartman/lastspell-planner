@@ -7,10 +7,14 @@
         :disabled="!allowTypeSelection"
       >
         <img
-          :src="`/assets/icons/${columnType}_Perks_Column_Icon.webp`"
+          :src="getColumnIconSrc(columnType)"
           :alt="`${columnType} column icon`"
           :title="capitalize(columnType)"
           class="h-7 w-7 object-contain"
+          :class="{
+            'rounded-full bg-slate-200 p-1':
+              hasPlaceholderColumnIcon(columnType),
+          }"
         />
         <span
           v-if="allowTypeSelection"
@@ -28,11 +32,12 @@
       <template v-for="tier in 5" :key="tier">
         <div v-if="tier > 1" class="tier-connector"></div>
         <PerkSlot
-          :perk="getSelectedPerk(tier)"
+          :selection="getSelectedPerk(tier)"
           :tier="tier"
           :columnType="columnType"
           :searchQuery="searchQuery"
           @select-perk="onSelectPerk"
+          @toggle-priority="onTogglePriority"
         />
       </template>
     </div>
@@ -42,6 +47,7 @@
 <script setup lang="ts">
 import PerkSlot from "./PerkSlot.vue";
 import { Perk } from "../types/Perk";
+import { SelectedPerk } from "../types/SelectedPerk";
 import ColumnTypeSelector from "./ColumnTypeSelector.vue";
 import { computed, ref } from "vue";
 
@@ -51,7 +57,7 @@ const props = defineProps({
     required: true,
   },
   selectedPerks: {
-    type: Array as () => Perk[],
+    type: Array as () => SelectedPerk[],
     required: true,
   },
   columnId: {
@@ -63,11 +69,11 @@ const props = defineProps({
     default: "",
   },
 });
-const emit = defineEmits(["select-perk", "columntype-selected"]);
+const emit = defineEmits(["select-perk", "columntype-selected", "toggle-priority"]);
 const showTypeSelector = ref(false);
 
-const getSelectedPerk = (tier: number) => {
-  return props.selectedPerks.find((perk) => perk.tier === tier) || null;
+const getSelectedPerk = (tier: number): SelectedPerk | null => {
+  return props.selectedPerks.find((sp) => sp.perk.tier === tier) || null;
 };
 
 const toggleColumnTypeSelector = () => {
@@ -76,6 +82,10 @@ const toggleColumnTypeSelector = () => {
 
 const onSelectPerk = (perk: Perk | null, tier: number) => {
   emit("select-perk", perk, props.columnId, tier);
+};
+
+const onTogglePriority = (tier: number) => {
+  emit("toggle-priority", props.columnId, tier);
 };
 
 const handleColumnTypeSelected = (columnType: string) => {
@@ -92,4 +102,20 @@ const allowTypeSelection = computed(() => {
     props.columnType,
   );
 });
+
+const getColumnIconSrc = (type: string) => {
+  if (type === "dwarf") {
+    return "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg";
+  }
+
+  if (type === "elf") {
+    return "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sparkles.svg";
+  }
+
+  return `/assets/icons/${type}_Perks_Column_Icon.webp`;
+};
+
+const hasPlaceholderColumnIcon = (type: string) => {
+  return type === "dwarf" || type === "elf";
+};
 </script>
