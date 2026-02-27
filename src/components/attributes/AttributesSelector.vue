@@ -107,7 +107,7 @@
                 type="text"
                 :placeholder="attribute.min"
                 :value="getMinTarget(attribute.id)"
-                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
+                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-ember/70 focus:outline-none focus:ring-1 focus:ring-ember/30"
                 @input="onMinTargetInput(attribute.id, $event)"
               />
               <span class="text-[10px] font-semibold uppercase text-slate-500"
@@ -117,7 +117,7 @@
                 type="text"
                 :placeholder="attribute.max"
                 :value="getMaxTarget(attribute.id)"
-                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
+                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-ember/70 focus:outline-none focus:ring-1 focus:ring-ember/30"
                 @input="onMaxTargetInput(attribute.id, $event)"
               />
             </div>

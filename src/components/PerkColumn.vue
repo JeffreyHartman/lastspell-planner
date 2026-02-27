@@ -18,7 +18,7 @@
         />
         <span
           v-if="allowTypeSelection"
-          class="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-amber-500/70"
+          class="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-ember/70"
         ></span>
       </button>
       <ColumnTypeSelector

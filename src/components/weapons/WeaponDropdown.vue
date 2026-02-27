@@ -8,7 +8,7 @@
       v-model="searchQuery"
       type="text"
       placeholder="Search weapons..."
-      class="mb-2 w-full rounded-lg border border-slate-600/50 bg-slate-800/80 px-3 py-1.5 text-sm text-white placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
+      class="mb-2 w-full rounded-lg border border-slate-600/50 bg-slate-800/80 px-3 py-1.5 text-sm text-white placeholder:text-slate-500 focus:border-ember/70 focus:outline-none focus:ring-1 focus:ring-ember/30"
     />
 
     <div class="max-h-64 overflow-y-auto">

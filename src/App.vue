@@ -4,11 +4,11 @@
   <div class="relative z-10 mx-auto w-full max-w-[1280px] px-4 pb-12 text-center sm:px-6">
     <header class="py-6 sm:py-8">
       <h1
-        class="text-3xl font-bold tracking-wider text-white drop-shadow-lg sm:text-4xl lg:text-5xl"
+        class="font-display text-3xl font-bold tracking-wider text-white drop-shadow-lg sm:text-4xl lg:text-5xl"
       >
         The Last Spell Planner
       </h1>
-      <p class="mt-1 text-sm tracking-wide text-slate-400">
+      <p class="mt-1.5 text-sm tracking-wide text-slate-300">
         Plan your perks, weapons, and attributes
       </p>
     </header>
@@ -31,7 +31,7 @@
             <input
               v-model="buildName"
               type="text"
-              class="min-w-0 flex-1 rounded-lg border border-slate-600/50 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-amber-500/70 focus:outline-none focus:ring-1 focus:ring-amber-500/30 transition-colors duration-150"
+              class="min-w-0 flex-1 rounded-lg border border-slate-600/50 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-ember/70 focus:outline-none focus:ring-1 focus:ring-ember/30 transition-colors duration-150"
               placeholder="Untitled Build"
             />
 
@@ -40,7 +40,7 @@
               class="btn inline-flex h-10 w-10 items-center justify-center !px-0"
               :class="
                 hasActiveSavedBuild
-                  ? 'border-amber-500/50 text-amber-400 shadow-glow-amber'
+                  ? 'border-ember/50 text-ember shadow-glow-ember'
                   : ''
               "
               :aria-label="
@@ -86,7 +86,7 @@
       </main>
 
       <aside class="glass-panel p-4 text-left xl:sticky xl:top-4">
-        <h2 class="mb-3 border-b border-slate-700/40 pb-2 text-xl">
+        <h2 class="font-display mb-3 border-b border-slate-700/40 pb-2 text-xl">
           Saved Builds
         </h2>
 
@@ -102,7 +102,7 @@
             class="flex w-full flex-col rounded-lg border px-3 py-2.5 text-left transition-all duration-150"
             :class="
               build.id === activeSavedBuildId
-                ? 'border-amber-500/50 bg-amber-500/10 text-white shadow-glow-amber'
+                ? 'border-ember/40 bg-ember/10 text-white shadow-glow-ember'
                 : 'border-slate-700/40 bg-slate-800/40 text-slate-300 hover:border-slate-600/60 hover:bg-slate-700/50'
             "
             @click="loadSavedBuild(build)"
@@ -219,7 +219,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Stole these from https://bbplanner.xyz */
 .blanket {
   position: fixed;
   top: 0;
@@ -227,10 +226,10 @@ onMounted(() => {
   left: 50%;
   width: min(1240px, calc(100vw - 24px));
   transform: translateX(-50%);
-  background: rgba(6, 6, 6, 0.65);
+  background: rgba(15, 12, 8, 0.72);
   border-radius: 12px;
   z-index: -1;
-  box-shadow: 0 0 30px 35px rgba(6, 6, 6, 0.65);
+  box-shadow: 0 0 30px 35px rgba(15, 12, 8, 0.72);
 }
 
 .appBackground {
@@ -244,7 +243,7 @@ onMounted(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  filter: grayscale(50%) brightness(0.7);
+  filter: sepia(25%) brightness(0.45);
   z-index: -2;
 }
 </style>

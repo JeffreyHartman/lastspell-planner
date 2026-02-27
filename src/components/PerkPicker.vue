@@ -22,7 +22,7 @@
         <img
           :src="perk.icon"
           :alt="perk.name"
-          class="h-10 w-10 cursor-pointer rounded-lg border border-transparent transition-all duration-150 hover:border-amber-500/50 hover:shadow-glow-amber"
+          class="h-10 w-10 cursor-pointer rounded-lg border border-transparent transition-all duration-150 hover:border-ember/50 hover:shadow-glow-ember"
           :class="{ 'bg-slate-100 p-1': isPlaceholderIcon(perk.icon) }"
         />
         <PerkTooltip :perk="perk" />

@@ -33,7 +33,7 @@
             class="rounded-md px-2.5 py-1 text-xs font-semibold transition-colors"
             :class="
               selectedRace === race.id
-                ? 'bg-amber-500/30 text-amber-200'
+                ? 'bg-ember/20 text-orange-200'
                 : 'text-slate-300 hover:bg-slate-700/70'
             "
             @click="onRaceSelected(race.id)"

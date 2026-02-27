@@ -11,7 +11,7 @@
         class="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-all duration-150"
         :class="
           currentType === columnType
-            ? 'border border-amber-500/40 bg-amber-500/15 text-amber-200'
+            ? 'border border-ember/40 bg-ember/15 text-orange-200'
             : 'border border-transparent text-slate-300 hover:bg-slate-700/60 hover:text-white'
         "
       >
