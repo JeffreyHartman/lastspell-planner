@@ -17,8 +17,8 @@ const DEFAULT_BUILD_NAME = "Untitled Build";
 const MAX_NAME_LENGTH = 100;
 
 const sanitizeBuildName = (rawName: string): string => {
-  const trimmedName = rawName.trim().slice(0, MAX_NAME_LENGTH);
-  return trimmedName.length > 0 ? trimmedName : DEFAULT_BUILD_NAME;
+  const cleaned = rawName.replace(/[\t\r\n]/g, "").trim().slice(0, MAX_NAME_LENGTH);
+  return cleaned.length > 0 ? cleaned : DEFAULT_BUILD_NAME;
 };
 
 const sanitizeQuery = (rawQuery: string): string => {
