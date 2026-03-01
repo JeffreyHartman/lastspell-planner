@@ -4,6 +4,7 @@ export type WeaponDlc = "dwarf" | "elf" | null;
 
 export interface Weapon {
   id: string;
+  numId: number;
   name: string;
   icon: string;
   category: WeaponCategory;

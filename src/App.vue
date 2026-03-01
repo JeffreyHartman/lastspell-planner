@@ -31,6 +31,7 @@
             <input
               v-model="buildName"
               type="text"
+              maxlength="100"
               class="min-w-0 flex-1 rounded-lg border border-slate-600/50 bg-slate-900/60 px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:border-ember/70 focus:outline-none focus:ring-1 focus:ring-ember/30 transition-colors duration-150"
               placeholder="Untitled Build"
             />
@@ -68,7 +69,9 @@
 
         <h2 class="section-header mt-6">Perk Tree</h2>
         <perk-tree
+          ref="perkTreeRef"
           :key="`perk-${plannerStateKey}`"
+          :initial-state="initialPerkState"
           @state-changed="onPlannerStateChanged"
         />
 
@@ -95,20 +98,32 @@
         </p>
 
         <div v-else class="mt-2 space-y-2">
-          <button
+          <div
             v-for="build in savedBuilds"
             :key="build.id"
-            type="button"
-            class="flex w-full flex-col rounded-lg border px-3 py-2.5 text-left transition-all duration-150"
-            :class="
-              build.id === activeSavedBuildId
-                ? 'border-ember/40 bg-ember/10 text-white shadow-glow-ember'
-                : 'border-slate-700/40 bg-slate-800/40 text-slate-300 hover:border-slate-600/60 hover:bg-slate-700/50'
-            "
-            @click="loadSavedBuild(build)"
+            class="flex items-center gap-1"
           >
-            <span class="truncate text-sm font-semibold">{{ build.name }}</span>
-          </button>
+            <button
+              type="button"
+              class="flex min-w-0 flex-1 flex-col rounded-lg border px-3 py-2.5 text-left transition-all duration-150"
+              :class="
+                build.id === activeSavedBuildId
+                  ? 'border-ember/40 bg-ember/10 text-white shadow-glow-ember'
+                  : 'border-slate-700/40 bg-slate-800/40 text-slate-300 hover:border-slate-600/60 hover:bg-slate-700/50'
+              "
+              @click="loadSavedBuild(build)"
+            >
+              <span class="truncate text-sm font-semibold">{{ build.name }}</span>
+            </button>
+            <button
+              type="button"
+              class="shrink-0 rounded-md p-1.5 text-slate-500 transition-colors hover:bg-red-900/30 hover:text-red-400"
+              aria-label="Delete build"
+              @click="onDeleteBuild(build)"
+            >
+              <TrashIcon class="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </aside>
     </div>
@@ -116,10 +131,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch, nextTick } from "vue";
 import {
   HeartIcon as HeartOutlineIcon,
   PlusIcon,
+  TrashIcon,
 } from "@heroicons/vue/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/vue/24/solid";
 
@@ -131,16 +147,47 @@ import {
   getDefaultBuildName,
   getSavedBuilds,
   saveBuild,
+  deleteBuild,
 } from "@/services/buildStorageService";
+import { useWeaponStore } from "@/stores/weaponStore";
+import { useAttributeStore } from "@/stores/attributeStore";
+import {
+  encodePlannerStateToQuery,
+  decodePlannerStateFromQuery,
+  isLegacyUrlFormat,
+} from "@/services/urlCodecService";
+import type { PerkColumnType } from "@/types/PerkColumn";
 
 const plannerStateKey = ref(0);
 const buildName = ref(getDefaultBuildName());
 const savedBuilds = ref<SavedBuild[]>([]);
 const activeSavedBuildId = ref<string | null>(null);
+const initialPerkState = ref<PerkColumnType[] | undefined>(undefined);
+const perkTreeRef = ref<InstanceType<typeof PerkTree> | null>(null);
+const isHydrating = ref(false);
+
+const weaponStore = useWeaponStore();
+const attributeStore = useAttributeStore();
 
 const hasActiveSavedBuild = computed(() => {
   return activeSavedBuildId.value !== null;
 });
+
+const syncUrlFromState = () => {
+  if (isHydrating.value) return;
+
+  const perkColumns = perkTreeRef.value?.perkColumns ?? [];
+
+  const query = encodePlannerStateToQuery({
+    name: buildName.value,
+    perkColumns,
+    weapons: weaponStore.$state,
+    attributePlans: attributeStore.attributePlans,
+  });
+
+  const newUrl = `${window.location.pathname}${query ? `?${query}` : ""}`;
+  window.history.replaceState({}, "", newUrl);
+};
 
 const getCurrentQuery = (): string => {
   return window.location.search.startsWith("?")
@@ -153,6 +200,8 @@ const refreshSavedBuilds = () => {
 };
 
 const persistCurrentBuild = (buildId?: string): SavedBuild => {
+  syncUrlFromState();
+
   const savedBuild = saveBuild({
     id: buildId ?? activeSavedBuildId.value ?? undefined,
     name: buildName.value,
@@ -166,11 +215,27 @@ const persistCurrentBuild = (buildId?: string): SavedBuild => {
   return savedBuild;
 };
 
-const createNewBuildFromScratch = () => {
-  buildName.value = getDefaultBuildName();
-  activeSavedBuildId.value = null;
-  window.history.replaceState({}, "", window.location.pathname);
+const hydrateFromState = (search: string) => {
+  isHydrating.value = true;
+
+  const state = decodePlannerStateFromQuery(search);
+
+  buildName.value = state.name || getDefaultBuildName();
+  initialPerkState.value = state.perkColumns;
+  weaponStore.setWeapons(state.weapons);
+  attributeStore.setPlans(state.attributePlans);
+
   plannerStateKey.value += 1;
+
+  nextTick(() => {
+    isHydrating.value = false;
+    syncUrlFromState();
+  });
+};
+
+const createNewBuildFromScratch = () => {
+  activeSavedBuildId.value = null;
+  hydrateFromState("");
 };
 
 const saveCurrentBuild = () => {
@@ -178,44 +243,70 @@ const saveCurrentBuild = () => {
 };
 
 const loadSavedBuild = (build: SavedBuild) => {
-  buildName.value = build.name;
   activeSavedBuildId.value = build.id;
 
-  const nextUrl = `${window.location.pathname}${build.query ? `?${build.query}` : ""}`;
-  window.history.replaceState({}, "", nextUrl);
-  plannerStateKey.value += 1;
+  // Migrate legacy saved builds
+  if (isLegacyUrlFormat(build.query)) {
+    hydrateFromState(build.query);
+    nextTick(() => {
+      persistCurrentBuild(build.id);
+    });
+    return;
+  }
+
+  hydrateFromState(build.query);
+};
+
+const onDeleteBuild = (build: SavedBuild) => {
+  const safeName = build.name.replace(/[\r\n]/g, " ").slice(0, 80);
+  if (!confirm(`Delete "${safeName}"?`)) return;
+
+  deleteBuild(build.id);
+  refreshSavedBuilds();
+
+  if (activeSavedBuildId.value === build.id) {
+    activeSavedBuildId.value = null;
+  }
 };
 
 const onPlannerStateChanged = () => {
-  if (!activeSavedBuildId.value) {
-    return;
-  }
+  syncUrlFromState();
 
-  persistCurrentBuild(activeSavedBuildId.value);
+  if (!isHydrating.value && activeSavedBuildId.value) {
+    persistCurrentBuild(activeSavedBuildId.value);
+  }
 };
 
 watch(buildName, () => {
-  if (!activeSavedBuildId.value) {
-    return;
-  }
+  syncUrlFromState();
 
-  persistCurrentBuild(activeSavedBuildId.value);
+  if (!isHydrating.value && activeSavedBuildId.value) {
+    persistCurrentBuild(activeSavedBuildId.value);
+  }
 });
 
 onMounted(() => {
   refreshSavedBuilds();
 
-  const matchingBuild = savedBuilds.value.find(
-    (build) => build.query === getCurrentQuery(),
-  );
+  const search = window.location.search;
 
-  if (matchingBuild) {
-    activeSavedBuildId.value = matchingBuild.id;
-    buildName.value = matchingBuild.name;
+  if (search && search !== "?") {
+    hydrateFromState(search);
+
+    // Try to match a saved build by query after migration
+    nextTick(() => {
+      const currentQuery = getCurrentQuery();
+      const matchingBuild = savedBuilds.value.find(
+        (build) => build.query === currentQuery,
+      );
+
+      if (matchingBuild) {
+        activeSavedBuildId.value = matchingBuild.id;
+        buildName.value = matchingBuild.name;
+      }
+    });
   }
 });
-
-
 </script>
 
 <style scoped>

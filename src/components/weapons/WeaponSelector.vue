@@ -60,14 +60,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { XMarkIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { useWeaponStore } from "@/stores/weaponStore";
-import {
-  encodeWeaponsForUrl,
-  decodeWeaponsFromUrl,
-  getAllWeapons,
-} from "@/services/weaponService";
+import { getAllWeapons } from "@/services/weaponService";
 import type { Weapon } from "@/types/Weapon";
 import WeaponRankItem from "./WeaponRankItem.vue";
 import WeaponDropdown from "./WeaponDropdown.vue";
@@ -77,7 +73,6 @@ const emit = defineEmits<{
 }>();
 
 const weaponStore = useWeaponStore();
-const isHydratingFromUrl = ref(true);
 const showDropdown = ref(false);
 
 const allWeapons = getAllWeapons();
@@ -97,40 +92,9 @@ const onWeaponSelected = (weapon: Weapon | null) => {
   showDropdown.value = false;
 };
 
-const syncWeaponsToUrl = () => {
-  const params = new URLSearchParams(window.location.search);
-  const encoded = encodeWeaponsForUrl(weaponStore.$state);
-
-  if (encoded) {
-    params.set("wpns", encoded);
-  } else {
-    params.delete("wpns");
-  }
-
-  const queryString = params.toString();
-  const nextUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ""}`;
-  window.history.replaceState({}, "", nextUrl);
-};
-
-onMounted(() => {
-  const params = new URLSearchParams(window.location.search);
-  const encoded = params.get("wpns");
-
-  if (encoded) {
-    weaponStore.setWeapons(decodeWeaponsFromUrl(encoded));
-  } else {
-    weaponStore.clearAll();
-  }
-
-  isHydratingFromUrl.value = false;
-  syncWeaponsToUrl();
-});
-
 watch(
   () => weaponStore.weapons,
   () => {
-    if (isHydratingFromUrl.value) return;
-    syncWeaponsToUrl();
     emit("state-changed");
   },
   { deep: true },

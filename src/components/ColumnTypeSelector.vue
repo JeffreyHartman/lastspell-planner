@@ -39,7 +39,7 @@ defineProps({
 
 const emit = defineEmits(["columntype-selected", "close-columntype-selector"]);
 
-const target = ref(null);
+const target = ref<HTMLElement | null>(null);
 onClickOutside(target, () => emit("close-columntype-selector"));
 onKeyStroke("Escape", () => emit("close-columntype-selector"));
 

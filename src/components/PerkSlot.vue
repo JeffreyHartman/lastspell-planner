@@ -100,8 +100,7 @@ const availablePerks = computed(() => {
     description: "Clears the perk from the column",
     icon: "/assets/icons/perks/clear.svg",
   };
-  perks.push(clearPerk);
-  return perks;
+  return [...perks, clearPerk];
 });
 
 const togglePerkPicker = async () => {

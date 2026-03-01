@@ -4,7 +4,7 @@
       <div>
         <h3 class="text-2xl font-bold text-white">Attributes Priorities</h3>
         <p class="text-xs text-slate-300">
-          Rate each stat from 0 to 3 stars and optionally set a target range.
+          Rate each stat from 0 to 3 stars.
         </p>
       </div>
 
@@ -63,10 +63,10 @@
           <div
             v-for="attribute in getVisibleAttributes(group)"
             :key="attribute.id"
-            class="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-2 gap-y-1 rounded-lg border border-slate-700/40 bg-slate-900/50 px-2.5 py-2 transition-colors duration-150 hover:border-slate-600/50"
+            class="flex min-w-0 items-center gap-2 rounded-lg border border-slate-700/40 bg-slate-900/50 px-2.5 py-2 transition-colors duration-150 hover:border-slate-600/50"
           >
             <div
-              class="group relative row-span-2 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-600/50 bg-slate-700/60 transition-colors duration-150"
+              class="group relative flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-slate-600/50 bg-slate-700/60 transition-colors duration-150"
               :title="attribute.name"
             >
               <img
@@ -100,27 +100,6 @@
               </button>
             </div>
 
-            <div
-              class="grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1"
-            >
-              <input
-                type="text"
-                :placeholder="attribute.min"
-                :value="getMinTarget(attribute.id)"
-                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-ember/70 focus:outline-none focus:ring-1 focus:ring-ember/30"
-                @input="onMinTargetInput(attribute.id, $event)"
-              />
-              <span class="text-[10px] font-semibold uppercase text-slate-500"
-                >to</span
-              >
-              <input
-                type="text"
-                :placeholder="attribute.max"
-                :value="getMaxTarget(attribute.id)"
-                class="w-full min-w-0 rounded border border-slate-600 bg-slate-900 px-1.5 py-1 text-center text-[11px] text-slate-100 placeholder:text-slate-500 focus:border-ember/70 focus:outline-none focus:ring-1 focus:ring-ember/30"
-                @input="onMaxTargetInput(attribute.id, $event)"
-              />
-            </div>
           </div>
         </div>
       </article>
@@ -129,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, watch } from "vue";
 import {
   EyeIcon,
   EyeSlashIcon,
@@ -138,11 +117,7 @@ import {
 import { StarIcon as StarSolidIcon } from "@heroicons/vue/24/solid";
 
 import { useAttributeStore } from "@/stores/attributeStore";
-import {
-  decodeAttributePlansFromUrl,
-  encodeAttributePlansForUrl,
-  getAttributeGroups,
-} from "@/services/attributesService";
+import { getAttributeGroups } from "@/services/attributesService";
 import {
   Attribute,
   AttributeGroup,
@@ -156,7 +131,6 @@ const emit = defineEmits<{
 
 const attributeStore = useAttributeStore();
 const attributeGroups = getAttributeGroups();
-const isHydratingFromUrl = ref(true);
 
 const allGroupsHideZeroStar = computed(() => {
   return attributeStore.allGroupsHideZeroStar;
@@ -170,29 +144,11 @@ const getStars = (attributeId: number): number => {
   return getPlan(attributeId).stars;
 };
 
-const getMinTarget = (attributeId: number): string => {
-  return getPlan(attributeId).minTarget;
-};
-
-const getMaxTarget = (attributeId: number): string => {
-  return getPlan(attributeId).maxTarget;
-};
-
 const setStars = (attributeId: number, selectedStars: number) => {
   const currentStars = getStars(attributeId);
   const nextStars =
     currentStars === selectedStars ? selectedStars - 1 : selectedStars;
   attributeStore.setStars(attributeId, nextStars);
-};
-
-const onMinTargetInput = (attributeId: number, event: Event) => {
-  const input = event.target as HTMLInputElement;
-  attributeStore.setMinTarget(attributeId, input.value);
-};
-
-const onMaxTargetInput = (attributeId: number, event: Event) => {
-  const input = event.target as HTMLInputElement;
-  attributeStore.setMaxTarget(attributeId, input.value);
 };
 
 const isGroupHidingZeroStar = (groupKey: AttributeGroupKey): boolean => {
@@ -223,43 +179,9 @@ const getStarredCount = (group: AttributeGroup): number => {
     .length;
 };
 
-const syncAttributesToUrl = () => {
-  const params = new URLSearchParams(window.location.search);
-  const encodedPlans = encodeAttributePlansForUrl(
-    attributeStore.attributePlans,
-  );
-
-  if (encodedPlans) {
-    params.set("attrs", encodedPlans);
-  } else {
-    params.delete("attrs");
-  }
-
-  const queryString = params.toString();
-  const nextUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ""}`;
-
-  window.history.replaceState({}, "", nextUrl);
-};
-
-onMounted(() => {
-  const params = new URLSearchParams(window.location.search);
-  const encodedPlans = params.get("attrs");
-
-  if (encodedPlans) {
-    attributeStore.setPlans(decodeAttributePlansFromUrl(encodedPlans));
-  } else {
-    attributeStore.clearPlans();
-  }
-
-  isHydratingFromUrl.value = false;
-  syncAttributesToUrl();
-});
-
 watch(
   () => attributeStore.attributePlans,
   () => {
-    if (isHydratingFromUrl.value) return;
-    syncAttributesToUrl();
     emit("state-changed");
   },
   { deep: true },

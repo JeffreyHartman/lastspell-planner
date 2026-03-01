@@ -36,8 +36,6 @@ const ATTRIBUTE_GROUPS: AttributeGroup[] = [
 
 const DEFAULT_PLAN_STATE: AttributePlanState = {
   stars: 0,
-  minTarget: "",
-  maxTarget: "",
 };
 
 const KNOWN_ATTRIBUTE_IDS = new Set(
@@ -93,22 +91,8 @@ export const clampStars = (stars: number): number => {
   return Math.min(3, Math.max(0, Math.trunc(stars)));
 };
 
-const encodePlanValue = (value: string): string => {
-  return encodeURIComponent(value.trim());
-};
-
-const decodePlanValue = (value: string): string => {
-  try {
-    return decodeURIComponent(value).trim();
-  } catch {
-    return "";
-  }
-};
-
 const hasPlanValue = (plan: AttributePlanState): boolean => {
-  return (
-    plan.stars > 0 || plan.minTarget.length > 0 || plan.maxTarget.length > 0
-  );
+  return plan.stars > 0;
 };
 
 export const encodeAttributePlansForUrl = (
@@ -123,8 +107,6 @@ export const encodeAttributePlansForUrl = (
 
       const normalizedPlan: AttributePlanState = {
         stars: clampStars(plan.stars),
-        minTarget: plan.minTarget?.trim() ?? "",
-        maxTarget: plan.maxTarget?.trim() ?? "",
       };
 
       if (!hasPlanValue(normalizedPlan)) {
@@ -140,10 +122,7 @@ export const encodeAttributePlansForUrl = (
       Boolean(entry),
     )
     .sort((a, b) => a.id - b.id)
-    .map(
-      ({ id, plan }) =>
-        `${id}~${plan.stars}~${encodePlanValue(plan.minTarget)}~${encodePlanValue(plan.maxTarget)}`,
-    )
+    .map(({ id, plan }) => `${id}~${plan.stars}`)
     .join(";");
 };
 
@@ -159,8 +138,7 @@ export const decodeAttributePlansFromUrl = (
   encodedPlans.split(";").forEach((encodedPlan) => {
     if (!encodedPlan) return;
 
-    const [rawId, rawStars = "0", rawMinTarget = "", rawMaxTarget = ""] =
-      encodedPlan.split("~");
+    const [rawId, rawStars = "0"] = encodedPlan.split("~");
 
     const id = Number(rawId);
 
@@ -170,8 +148,6 @@ export const decodeAttributePlansFromUrl = (
 
     const plan: AttributePlanState = {
       stars: clampStars(Number(rawStars)),
-      minTarget: decodePlanValue(rawMinTarget),
-      maxTarget: decodePlanValue(rawMaxTarget),
     };
 
     if (!hasPlanValue(plan)) {

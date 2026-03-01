@@ -4,11 +4,17 @@ import type { Weapon, RankedWeapon, WeaponRankingsState } from "../types/Weapon"
 const weapons = weaponsData as Weapon[];
 
 const WEAPON_BY_ID = new Map<string, Weapon>(weapons.map((w) => [w.id, w]));
+const WEAPON_BY_NUM_ID = new Map<number, Weapon>(
+  weapons.map((w) => [w.numId, w]),
+);
 
 export const getAllWeapons = (): Weapon[] => [...weapons];
 
 export const getWeaponById = (id: string): Weapon | undefined =>
   WEAPON_BY_ID.get(id);
+
+export const getWeaponByNumId = (numId: number): Weapon | undefined =>
+  WEAPON_BY_NUM_ID.get(numId);
 
 export const clampWeaponStars = (stars: number): number =>
   Math.max(0, Math.min(3, Math.floor(stars)));

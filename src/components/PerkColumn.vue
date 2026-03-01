@@ -103,6 +103,11 @@ const allowTypeSelection = computed(() => {
   );
 });
 
+const VALID_ICON_TYPES = new Set([
+  "melee", "magic", "ranged", "choice", "dwarf", "elf",
+  "misc", "poison", "debuff", "defense", "assassin",
+]);
+
 const getColumnIconSrc = (type: string) => {
   if (type === "dwarf") {
     return "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg";
@@ -110,6 +115,10 @@ const getColumnIconSrc = (type: string) => {
 
   if (type === "elf") {
     return "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sparkles.svg";
+  }
+
+  if (!VALID_ICON_TYPES.has(type)) {
+    return `/assets/icons/misc_Perks_Column_Icon.webp`;
   }
 
   return `/assets/icons/${type}_Perks_Column_Icon.webp`;

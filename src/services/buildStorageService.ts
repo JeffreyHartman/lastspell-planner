@@ -14,9 +14,10 @@ interface SaveBuildInput {
 
 const STORAGE_KEY = "tls-planner.saved-builds.v1";
 const DEFAULT_BUILD_NAME = "Untitled Build";
+const MAX_NAME_LENGTH = 100;
 
 const sanitizeBuildName = (rawName: string): string => {
-  const trimmedName = rawName.trim();
+  const trimmedName = rawName.trim().slice(0, MAX_NAME_LENGTH);
   return trimmedName.length > 0 ? trimmedName : DEFAULT_BUILD_NAME;
 };
 
@@ -133,6 +134,11 @@ export const saveBuild = (input: SaveBuildInput): SavedBuild => {
 
   persistBuilds([createdBuild, ...currentBuilds]);
   return createdBuild;
+};
+
+export const deleteBuild = (buildId: string): void => {
+  const builds = getSavedBuilds().filter((b) => b.id !== buildId);
+  persistBuilds(builds);
 };
 
 export const getDefaultBuildName = (): string => {

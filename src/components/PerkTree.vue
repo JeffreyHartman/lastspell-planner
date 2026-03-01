@@ -51,6 +51,7 @@
     <div class="flex justify-center gap-1 pb-2 sm:gap-2">
       <PerkColumn
         v-for="column in perkColumns"
+        :key="column.id"
         :columnId="column.id"
         :columnType="column.type"
         :selectedPerks="column.perks"
@@ -73,8 +74,10 @@ import {
 import PerkColumn from "./PerkColumn.vue";
 import { PerkColumnType } from "../types/PerkColumn";
 import { Perk } from "../types/Perk";
-import { SelectedPerk } from "../types/SelectedPerk";
-import { getPerkById } from "../services/perkService";
+
+const props = defineProps<{
+  initialState?: PerkColumnType[];
+}>();
 
 const emit = defineEmits<{
   (event: "state-changed"): void;
@@ -92,17 +95,6 @@ const races: { id: Race; label: string; columnType: string }[] = [
 
 const selectedRace = ref<Race>("human");
 
-const DEFAULT_COLUMN_TYPES = [
-  "melee",
-  "magic",
-  "ranged",
-  "choice",
-  "choice",
-  "misc",
-  "misc",
-  "misc",
-];
-
 const RACIAL_COLUMN_INDEX = 5;
 
 const perkColumns = ref<PerkColumnType[]>([
@@ -116,108 +108,29 @@ const perkColumns = ref<PerkColumnType[]>([
   { id: 7, type: "misc", perks: [] },
 ]);
 
-// Update URL when perks change
+defineExpose({ perkColumns });
+
+const isInitialized = ref(false);
+
 watch(
   perkColumns,
-  (newColumns) => {
-    const params = new URLSearchParams(window.location.search);
-
-    removePerkParams(params);
-
-    newColumns.forEach((column, index) => {
-      // Save column type if it's not the default for that column index
-      if (column.type !== getDefaultColumnType(index)) {
-        params.set(`c${index}t`, column.type);
-      }
-
-      // Save selected perks
-      column.perks.forEach((sp) => {
-        const suffix = sp.priority === "bonus" ? "-b" : "";
-        params.append(`c${index}p`, `${sp.perk.id}-${sp.perk.tier}${suffix}`);
-      });
-    });
-
-    const queryString = params.toString();
-    const newUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ""}`;
-
-    window.history.replaceState({}, "", newUrl);
-    emit("state-changed");
+  () => {
+    if (isInitialized.value) {
+      emit("state-changed");
+    }
   },
   { deep: true },
 );
 
-const removePerkParams = (params: URLSearchParams) => {
-  const keysToRemove: string[] = [];
-
-  params.forEach((_, key) => {
-    if (/^c\d+(t|p)$/.test(key)) {
-      keysToRemove.push(key);
-    }
-  });
-
-  keysToRemove.forEach((key) => {
-    params.delete(key);
-  });
-};
-
-// Load perks from URL on mount
 onMounted(() => {
-  const params = new URLSearchParams(window.location.search);
-
-  const legacyRaceType = params.get("c0t");
-  const hasRacialTypeInLegacyColumn =
-    legacyRaceType === "dwarf" || legacyRaceType === "elf";
-  const hasRacialTypeInCorrectColumn = ["dwarf", "elf"].includes(
-    params.get(`c${RACIAL_COLUMN_INDEX}t`) ?? "",
-  );
-
-  if (hasRacialTypeInLegacyColumn && !hasRacialTypeInCorrectColumn) {
-    params.set(`c${RACIAL_COLUMN_INDEX}t`, legacyRaceType);
-    params.delete("c0t");
-    const queryString = params.toString();
-    const newUrl = `${window.location.pathname}${queryString ? `?${queryString}` : ""}`;
-    window.history.replaceState({}, "", newUrl);
+  if (props.initialState) {
+    perkColumns.value = structuredClone(props.initialState);
+    selectedRace.value = getRaceByColumnType(
+      perkColumns.value[RACIAL_COLUMN_INDEX]?.type ?? "misc",
+    );
   }
-
-  // Create a new array of columns
-  const newColumns = perkColumns.value.map((column, index) => {
-    const newColumn: PerkColumnType = { ...column, perks: [] as SelectedPerk[] };
-
-    // Load column type
-    const columnType = params.get(`c${index}t`);
-    if (columnType) {
-      newColumn.type = columnType;
-    }
-
-    // Load perks
-    const columnPerks = params.getAll(`c${index}p`);
-
-    columnPerks.forEach((perkParam) => {
-      const segments = perkParam.split("-");
-      const perkId = Number(segments[0]);
-      const tier = Number(segments[1]);
-      const priority = segments[2] === "b" ? "bonus" : "essential";
-      const perk = getPerkById(perkId);
-
-      if (perk && perk.tier === tier) {
-        newColumn.perks.push({ perk, priority });
-      }
-    });
-
-    return newColumn;
-  });
-
-  // Assign the new array to perkColumns
-  perkColumns.value = newColumns;
-  selectedRace.value = getRaceByColumnType(
-    newColumns[RACIAL_COLUMN_INDEX]?.type ?? "misc",
-  );
+  isInitialized.value = true;
 });
-
-// Helper function to get default column type
-function getDefaultColumnType(columnIndex: number): string {
-  return DEFAULT_COLUMN_TYPES[columnIndex];
-}
 
 function getRaceByColumnType(columnType: string): Race {
   if (columnType === "dwarf") return "dwarf";

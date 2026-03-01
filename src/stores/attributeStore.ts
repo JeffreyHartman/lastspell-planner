@@ -52,15 +52,9 @@ export const useAttributeStore = defineStore("attributes", {
 
       const normalizedPlan: AttributePlanState = {
         stars: clampStars(plan.stars),
-        minTarget: plan.minTarget.trim(),
-        maxTarget: plan.maxTarget.trim(),
       };
 
-      if (
-        normalizedPlan.stars === 0 &&
-        !normalizedPlan.minTarget &&
-        !normalizedPlan.maxTarget
-      ) {
+      if (normalizedPlan.stars === 0) {
         delete this.attributePlans[attributeId];
         return;
       }
@@ -71,25 +65,6 @@ export const useAttributeStore = defineStore("attributes", {
     setStars(attributeId: number, stars: number) {
       const plan = this.ensurePlan(attributeId);
       plan.stars = clampStars(stars);
-      this.cleanupPlan(attributeId);
-    },
-
-    setMinTarget(attributeId: number, minTarget: string) {
-      const plan = this.ensurePlan(attributeId);
-      plan.minTarget = minTarget;
-      this.cleanupPlan(attributeId);
-    },
-
-    setMaxTarget(attributeId: number, maxTarget: string) {
-      const plan = this.ensurePlan(attributeId);
-      plan.maxTarget = maxTarget;
-      this.cleanupPlan(attributeId);
-    },
-
-    setRange(attributeId: number, minTarget: string, maxTarget: string) {
-      const plan = this.ensurePlan(attributeId);
-      plan.minTarget = minTarget;
-      plan.maxTarget = maxTarget;
       this.cleanupPlan(attributeId);
     },
 
@@ -105,15 +80,9 @@ export const useAttributeStore = defineStore("attributes", {
 
         const normalizedPlan: AttributePlanState = {
           stars: clampStars(plan.stars),
-          minTarget: plan.minTarget?.trim() ?? "",
-          maxTarget: plan.maxTarget?.trim() ?? "",
         };
 
-        if (
-          normalizedPlan.stars === 0 &&
-          !normalizedPlan.minTarget &&
-          !normalizedPlan.maxTarget
-        ) {
+        if (normalizedPlan.stars === 0) {
           return;
         }
 

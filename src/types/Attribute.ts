@@ -17,8 +17,6 @@ export interface AttributeGroup {
 
 export interface AttributePlanState {
   stars: number;
-  minTarget: string;
-  maxTarget: string;
 }
 
 export type AttributePlansById = Record<number, AttributePlanState>;

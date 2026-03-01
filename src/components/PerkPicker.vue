@@ -15,8 +15,6 @@
         v-for="perk in perks"
         :key="perk.id"
         class="group relative"
-        @mouseover="showDetails(perk)"
-        @mouseout="hideDetails"
         @click="selectPerk(perk)"
       >
         <img
@@ -49,20 +47,10 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["close-perk-picker", "select-perk"]);
-const target = ref(null);
+const target = ref<HTMLElement | null>(null);
 
 onClickOutside(target, () => emit("close-perk-picker"));
 onKeyStroke("Escape", () => emit("close-perk-picker"));
-
-const selectedPerk = ref<Perk | null>(null);
-
-const showDetails = (perk: Perk) => {
-  selectedPerk.value = perk;
-};
-
-const hideDetails = () => {
-  selectedPerk.value = null;
-};
 
 const selectPerk = (perk: Perk) => {
   emit("select-perk", perk);
