@@ -124,7 +124,10 @@ watch(
 
 onMounted(() => {
   if (props.initialState) {
-    perkColumns.value = structuredClone(props.initialState);
+    perkColumns.value = props.initialState.map((col) => ({
+      ...col,
+      perks: col.perks.map((sp) => ({ ...sp, perk: { ...sp.perk } })),
+    }));
     selectedRace.value = getRaceByColumnType(
       perkColumns.value[RACIAL_COLUMN_INDEX]?.type ?? "misc",
     );
