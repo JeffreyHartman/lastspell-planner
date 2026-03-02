@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pointer-events-none absolute left-full top-1/2 z-30 ml-3 hidden -translate-y-1/2 animate-fade-in rounded-lg border border-ember/25 bg-slate-900/95 p-3 text-left text-white shadow-glass backdrop-blur-sm group-hover:block"
+    class="pointer-events-none absolute left-full top-1/2 z-30 ml-3 hidden -translate-y-1/2 animate-fade-in rounded-lg border border-ember/25 bg-slate-900/95 p-3 text-left text-white shadow-glass backdrop-blur-sm sm:group-hover:block"
     :class="widthClass"
   >
     <h3 class="mb-1 text-sm font-semibold leading-tight text-orange-200">

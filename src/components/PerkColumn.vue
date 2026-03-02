@@ -1,16 +1,16 @@
 <template>
-  <div class="flex flex-col items-center px-1 sm:px-2">
+  <div class="flex flex-col items-center px-0.5 sm:px-2">
     <div class="relative mb-3">
       <button
         @click="toggleColumnTypeSelector"
-        class="group flex h-10 w-10 items-center justify-center rounded-full border border-slate-600/50 bg-slate-800/70 transition-all duration-200 hover:border-slate-400/60 hover:shadow-glow-sm disabled:cursor-default disabled:opacity-50 disabled:hover:border-slate-600/50 disabled:hover:shadow-none"
+        class="group flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full border border-slate-600/50 bg-slate-800/70 transition-all duration-200 hover:border-slate-400/60 hover:shadow-glow-sm disabled:cursor-default disabled:opacity-50 disabled:hover:border-slate-600/50 disabled:hover:shadow-none"
         :disabled="!allowTypeSelection"
       >
         <img
           :src="getColumnIconSrc(columnType)"
           :alt="`${columnType} column icon`"
           :title="capitalize(columnType)"
-          class="h-7 w-7 object-contain"
+          class="h-5 w-5 sm:h-7 sm:w-7 object-contain"
           :class="{
             'rounded-full bg-slate-200 p-1':
               hasPlaceholderColumnIcon(columnType),

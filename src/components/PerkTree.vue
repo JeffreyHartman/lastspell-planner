@@ -41,7 +41,8 @@
             <span class="text-emerald-400/90">Nice to have</span>
           </div>
           <span class="text-slate-600">|</span>
-          <span>Right-click to toggle</span>
+          <span class="sm:hidden">Long-press to toggle</span>
+          <span class="hidden sm:inline">Right-click to toggle</span>
         </div>
 
         <div
@@ -69,7 +70,7 @@
       </button>
     </div>
 
-    <div class="flex justify-center gap-1 pb-2 sm:gap-2">
+    <div class="flex justify-center gap-0 pb-2 sm:gap-2">
       <PerkColumn
         v-for="column in perkColumns"
         :key="column.id"

@@ -16,7 +16,7 @@
         v-if="perk"
         :src="perk.icon"
         :alt="perk.name"
-        class="h-10 w-10 rounded-full"
+        class="h-6 w-6 sm:h-10 sm:w-10 rounded-full"
         :class="{ 'bg-slate-100 p-1': isPlaceholderIcon(perk.icon) }"
       />
       <span v-else class="h-2 w-2 rounded-full bg-slate-600/60"></span>
@@ -24,7 +24,7 @@
     </div>
     <div
       v-if="isSearchMatch && matchingPerkNames.length"
-      class="pointer-events-none absolute left-14 top-1/2 z-10 -translate-y-1/2 whitespace-nowrap rounded border border-blue-500/30 bg-slate-800/90 px-2 py-1 text-xs text-blue-300"
+      class="pointer-events-none absolute left-10 sm:left-14 top-1/2 z-10 -translate-y-1/2 whitespace-nowrap rounded border border-blue-500/30 bg-slate-800/90 px-2 py-1 text-xs text-blue-300"
     >
       {{ matchingPerkNames.join(", ") }}
     </div>
@@ -43,6 +43,7 @@ import { computed, ref, PropType, nextTick } from "vue";
 import { Perk } from "../types/Perk";
 import { SelectedPerk } from "../types/SelectedPerk";
 import { getPerksByTypeAndTier } from "../services/perkService";
+import { onLongPress } from "@vueuse/core";
 import PerkPicker from "./PerkPicker.vue";
 import PerkTooltip from "./PerkTooltip.vue";
 
@@ -69,7 +70,15 @@ const emit = defineEmits(["select-perk", "toggle-priority"]);
 
 const showPerkPicker = ref(false);
 const perkSlot = ref<HTMLElement | null>(null);
-const pickerPosition = ref({ top: "0px", left: "0px" });
+const pickerPosition = ref<Record<string, string>>({ top: "0px", left: "0px" });
+const longPressTriggered = ref(false);
+
+onLongPress(perkSlot, () => {
+  if (perk.value) {
+    longPressTriggered.value = true;
+    emit("toggle-priority", props.tier);
+  }
+}, { delay: 500 });
 
 const perk = computed(() => props.selection?.perk ?? null);
 const priority = computed(() => props.selection?.priority);
@@ -104,14 +113,29 @@ const availablePerks = computed(() => {
 });
 
 const togglePerkPicker = async () => {
+  if (longPressTriggered.value) {
+    longPressTriggered.value = false;
+    return;
+  }
   showPerkPicker.value = !showPerkPicker.value;
   if (showPerkPicker.value) {
     await nextTick();
     if (perkSlot.value) {
-      pickerPosition.value = {
-        top: `0px`,
-        left: `52px`,
-      };
+      const isMobile = window.innerWidth < 640;
+      if (isMobile) {
+        const rect = perkSlot.value.getBoundingClientRect();
+        pickerPosition.value = {
+          position: "fixed",
+          top: `${rect.bottom + 8}px`,
+          left: "50%",
+          transform: "translateX(-50%)",
+        };
+      } else {
+        pickerPosition.value = {
+          top: "0px",
+          left: "52px",
+        };
+      }
     }
   }
 };
