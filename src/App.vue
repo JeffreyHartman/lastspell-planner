@@ -139,6 +139,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/vue/24/solid";
 
+import { inject as injectAnalytics } from "@vercel/analytics";
 import PerkTree from "./components/PerkTree.vue";
 import WeaponSelector from "./components/weapons/WeaponSelector.vue";
 import AttributesSelector from "./components/attributes/AttributesSelector.vue";
@@ -157,6 +158,8 @@ import {
   isLegacyUrlFormat,
 } from "@/services/urlCodecService";
 import type { PerkColumnType } from "@/types/PerkColumn";
+
+injectAnalytics();
 
 const plannerStateKey = ref(0);
 const buildName = ref(getDefaultBuildName());
