@@ -21,7 +21,28 @@
             <XMarkIcon class="h-4 w-4" />
           </button>
         </div>
-        <span class="text-xs text-slate-500">Right-click a perk to mark as bonus</span>
+        <div class="flex items-center gap-3 text-xs text-slate-500">
+          <div class="flex items-center gap-1.5">
+            <span
+              class="inline-block h-3 w-3 rounded-full border border-gold/80"
+              style="
+                box-shadow:
+                  0 0 4px 1px rgba(212, 168, 67, 0.6),
+                  0 0 10px 3px rgba(212, 168, 67, 0.35);
+              "
+            ></span>
+            <span class="text-gold/90">Core</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span
+              class="inline-block h-3 w-3 rounded-full border border-emerald-500/50"
+              style="box-shadow: 0 0 10px 2px rgba(78, 173, 107, 0.3)"
+            ></span>
+            <span class="text-emerald-400/90">Nice to have</span>
+          </div>
+          <span class="text-slate-600">|</span>
+          <span>Right-click to toggle</span>
+        </div>
 
         <div
           class="flex items-center rounded-lg border border-slate-600/60 bg-slate-800/80 p-0.5"
