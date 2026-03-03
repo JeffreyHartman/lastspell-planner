@@ -146,6 +146,9 @@ const handleSelectPerk = (perk: Perk) => {
 };
 
 const onRightClick = () => {
+  if (longPressTriggered.value) {
+    return;
+  }
   if (perk.value) {
     emit("toggle-priority", props.tier);
   }
