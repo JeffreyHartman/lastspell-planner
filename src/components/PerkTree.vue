@@ -41,7 +41,7 @@
             <span class="text-emerald-400/90">Nice to have</span>
           </div>
           <span class="text-slate-600">|</span>
-          <span class="sm:hidden">Long-press to toggle</span>
+          <span class="sm:hidden">Re-select to toggle</span>
           <span class="hidden sm:inline">Right-click to toggle</span>
         </div>
 
@@ -198,12 +198,29 @@ const onColumnTypeSelected = (newType: string, id: number) => {
 };
 
 const onRaceSelected = (race: Race) => {
+  const previousRace = selectedRace.value;
   selectedRace.value = race;
 
   const racialColumn = perkColumns.value.find(
     (column) => column.id === RACIAL_COLUMN_INDEX,
   );
   if (!racialColumn) return;
+
+  // When switching away from Human, try to move misc perks to other misc columns
+  if (previousRace === "human" && race !== "human" && racialColumn.perks.length > 0) {
+    const otherMiscColumns = perkColumns.value.filter(
+      (col) => col.id !== RACIAL_COLUMN_INDEX && col.type === "misc",
+    );
+
+    for (const sp of racialColumn.perks) {
+      const target = otherMiscColumns.find(
+        (col) => !col.perks.some((p) => p.perk.tier === sp.perk.tier),
+      );
+      if (target) {
+        target.perks.push({ perk: { ...sp.perk }, priority: sp.priority });
+      }
+    }
+  }
 
   racialColumn.type = getColumnTypeByRace(race);
   racialColumn.perks = [];

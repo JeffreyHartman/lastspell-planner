@@ -21,8 +21,11 @@
         <img
           :src="perk.icon"
           :alt="perk.name"
-          class="h-8 w-8 sm:h-10 sm:w-10 cursor-pointer rounded-lg border border-transparent transition-all duration-150 hover:border-ember/50 hover:shadow-glow-ember"
-          :class="{ 'bg-slate-100 p-1': isPlaceholderIcon(perk.icon) }"
+          class="h-8 w-8 sm:h-10 sm:w-10 cursor-pointer rounded-lg border transition-all duration-150 hover:border-ember/50 hover:shadow-glow-ember"
+          :class="[
+            perk.id === selectedPerkId ? 'border-gold/60' : 'border-transparent',
+            { 'bg-slate-100 p-1': isPlaceholderIcon(perk.icon) },
+          ]"
         />
         <PerkTooltip :perk="perk" />
       </div>
@@ -44,6 +47,10 @@ const props = defineProps({
   position: {
     type: Object as PropType<Record<string, string>>,
     required: true,
+  },
+  selectedPerkId: {
+    type: Number as PropType<number | null>,
+    default: null,
   },
 });
 

@@ -10,9 +10,6 @@
       }"
       @click="togglePerkPicker"
       @contextmenu.prevent="onRightClick"
-      @pointerdown="onPointerDown"
-      @pointerup="onPointerUp"
-      @pointercancel="onPointerUp"
       ref="perkSlot"
     >
       <img
@@ -35,6 +32,7 @@
       v-if="showPerkPicker"
       :perks="availablePerks"
       :position="pickerPosition"
+      :selectedPerkId="perk?.id ?? null"
       @close-perk-picker="showPerkPicker = false"
       @select-perk="handleSelectPerk"
     />
@@ -73,31 +71,6 @@ const emit = defineEmits(["select-perk", "toggle-priority"]);
 const showPerkPicker = ref(false);
 const perkSlot = ref<HTMLElement | null>(null);
 const pickerPosition = ref<Record<string, string>>({ top: "0px", left: "0px" });
-const longPressTriggered = ref(false);
-let longPressTimer: ReturnType<typeof setTimeout> | null = null;
-
-const clearLongPressTimer = () => {
-  if (longPressTimer !== null) {
-    clearTimeout(longPressTimer);
-    longPressTimer = null;
-  }
-};
-
-const onPointerDown = () => {
-  longPressTriggered.value = false;
-  clearLongPressTimer();
-  longPressTimer = setTimeout(() => {
-    longPressTimer = null;
-    if (perk.value) {
-      longPressTriggered.value = true;
-      emit("toggle-priority", props.tier);
-    }
-  }, 500);
-};
-
-const onPointerUp = () => {
-  clearLongPressTimer();
-};
 
 const perk = computed(() => props.selection?.perk ?? null);
 const priority = computed(() => props.selection?.priority);
@@ -132,10 +105,6 @@ const availablePerks = computed(() => {
 });
 
 const togglePerkPicker = async () => {
-  if (longPressTriggered.value) {
-    longPressTriggered.value = false;
-    return;
-  }
   showPerkPicker.value = !showPerkPicker.value;
   if (showPerkPicker.value) {
     await nextTick();
@@ -159,15 +128,18 @@ const togglePerkPicker = async () => {
   }
 };
 
-const handleSelectPerk = (perk: Perk) => {
-  emit("select-perk", perk.id === 0 ? null : perk, props.tier);
+const handleSelectPerk = (selectedPerk: Perk) => {
+  if (selectedPerk.id === 0) {
+    emit("select-perk", null, props.tier);
+  } else if (perk.value && perk.value.id === selectedPerk.id) {
+    emit("toggle-priority", props.tier);
+  } else {
+    emit("select-perk", selectedPerk, props.tier);
+  }
   showPerkPicker.value = false;
 };
 
 const onRightClick = () => {
-  if (longPressTriggered.value) {
-    return;
-  }
   if (perk.value) {
     emit("toggle-priority", props.tier);
   }
