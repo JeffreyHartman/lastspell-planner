@@ -10,6 +10,9 @@
       }"
       @click="togglePerkPicker"
       @contextmenu.prevent="onRightClick"
+      @pointerdown="onPointerDown"
+      @pointerup="onPointerUp"
+      @pointercancel="onPointerUp"
       ref="perkSlot"
     >
       <img
@@ -43,7 +46,6 @@ import { computed, ref, PropType, nextTick } from "vue";
 import { Perk } from "../types/Perk";
 import { SelectedPerk } from "../types/SelectedPerk";
 import { getPerksByTypeAndTier } from "../services/perkService";
-import { onLongPress } from "@vueuse/core";
 import PerkPicker from "./PerkPicker.vue";
 import PerkTooltip from "./PerkTooltip.vue";
 
@@ -72,13 +74,30 @@ const showPerkPicker = ref(false);
 const perkSlot = ref<HTMLElement | null>(null);
 const pickerPosition = ref<Record<string, string>>({ top: "0px", left: "0px" });
 const longPressTriggered = ref(false);
+let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 
-onLongPress(perkSlot, () => {
-  if (perk.value) {
-    longPressTriggered.value = true;
-    emit("toggle-priority", props.tier);
+const clearLongPressTimer = () => {
+  if (longPressTimer !== null) {
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
   }
-}, { delay: 500 });
+};
+
+const onPointerDown = () => {
+  longPressTriggered.value = false;
+  clearLongPressTimer();
+  longPressTimer = setTimeout(() => {
+    longPressTimer = null;
+    if (perk.value) {
+      longPressTriggered.value = true;
+      emit("toggle-priority", props.tier);
+    }
+  }, 500);
+};
+
+const onPointerUp = () => {
+  clearLongPressTimer();
+};
 
 const perk = computed(() => props.selection?.perk ?? null);
 const priority = computed(() => props.selection?.priority);
