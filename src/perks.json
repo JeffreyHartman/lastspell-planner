@@ -5,7 +5,7 @@
     "type": "melee",
     "name": "Fatality",
     "tier": 1,
-    "description": "Unlocks the Fatality Skill, allowing to Execute any enemy with less than 10 Health. This threshold is increased by 3 for each level of the hero. /r Fatality Skill: No cost, melee range, targets 1. Unlimited uses per turn. Ignores armor and resistances. "
+    "description": "Unlocks the Fatality Skill, allowing to Execute any enemy with less than 15 Health. This threshold is increased by 1 for every 1% Physical damage after 100. /r Fatality Skill: No cost, melee range, targets 1. Unlimited uses per turn. Ignores armor and resistances."
   },
   {
     "id": 2,
@@ -173,7 +173,7 @@
     "type": "ranged",
     "name": "Perseverance",
     "tier": 1,
-    "description": "Every 2 attacks from the Hero dodged by at least 1 unit: Restore 1 Action Points. The Hero receives a +5% Accuracy Buff for 2 turns."
+    "description": "Once per turn, when an attack from the Hero is dodged by at least one unit: Restore 2 Action Points. The Hero receives a +10% Accuracy Buff for 2 turns."
   },
   {
     "id": 23,
@@ -197,7 +197,7 @@
     "type": "ranged",
     "name": "Shorter Weapons",
     "tier": 3,
-    "description": "-1 Skill Range, +15% Accuracy, +20% Reliability."
+    "description": "-2 Skill Range, when attacking a unit at a distance of 2 to 6 tiles, the attack gets: Undodgeable."
   },
   {
     "id": 26,
@@ -205,7 +205,7 @@
     "type": "ranged",
     "name": "Longer Weapons",
     "tier": 3,
-    "description": "-25% Reliability, +2 Skill Range."
+    "description": "+2 Skill Range, when attacking a unit at a distance of 5 tiles or less, the attack gets: Inaccurate x1.5"
   },
   {
     "id": 27,
@@ -221,7 +221,7 @@
     "type": "ranged",
     "name": "Field Study",
     "tier": 4,
-    "description": "For every 12 units killed at a distance of 4 tiles or more: +1 Skill Range. This modifier is reset every morning."
+    "description": "Increase maximum Skill Range to 16. For every 12 units killed at a distance of 4 tiles or more: +1 Skill Range. This modifier is reset every morning."
   },
   {
     "id": 29,
@@ -237,7 +237,7 @@
     "type": "ranged",
     "name": "Surgical Strike",
     "tier": 5,
-    "description": "When attacking a unit with full Health, the attack gets: +50% Reliability, +20% Accuracy."
+    "description": "After attacking and killing an enemy unit that was at full Health and at range 5 or more: Hero's next skill costs Move Points instead of Action Points at 1.5x the initial cost."
   },
   {
     "id": 31,
@@ -261,7 +261,7 @@
     "type": "poison",
     "name": "Toxic Leech",
     "tier": 3,
-    "description": "Whenever a unit takes damage from Poison within a range of 5: Restore 2 Health."
+    "description": "Whenever a unit takes damage from Poison within a range of 6: Restore 3 Health."
   },
   {
     "id": 34,
@@ -269,7 +269,7 @@
     "type": "poison",
     "name": "Epidemic",
     "tier": 4,
-    "description": "When applying Poison to a unit: also apply the Contagion Alteration for 2 turns."
+    "description": "Every 3 enemies Poisoned, apply: 30 Poison and Contagion for 2 turns to the closest enemy without Contagion in a range of 10."
   },
   {
     "id": 35,
@@ -309,7 +309,7 @@
     "type": "debuff",
     "name": "Bully",
     "tier": 3,
-    "description": "When attacking a unit, for each Negative alteration of a different type they are affected by, the attack gets: +25% Critical, -15% Critical Power."
+    "description": "When attacking a unit, for each Negative alteration of a different type they are affected by, the attack gets: +25% Critical, -10% Critical Power."
   },
   {
     "id": 40,
@@ -325,7 +325,7 @@
     "type": "assassin",
     "name": "Cherry Picking",
     "tier": 1,
-    "description": "When attacking a isolated unit, the attack gets: +40% Reliability."
+    "description": "When attacking a isolated unit, the attack gets: +75% Reliability."
   },
   {
     "id": 42,
@@ -341,7 +341,7 @@
     "type": "assassin",
     "name": "One By One",
     "tier": 3,
-    "description": "Whenever a isolated unit is killed: +4% Damage, or +6% Damage when using physical damage, up to 60%. Hitting a non isolated unit decreases this bonus by -6% Damage, down to 0. The modifier is reset every morning."
+    "description": "Whenever a isolated unit is killed: +7% Damage, or +10% Damage when using physical damage, up to 80%. Hitting a non isolated unit decreases this bonus by -4% Damage, down to 0. The modifier is reset every morning."
   },
   {
     "id": 44,
@@ -379,9 +379,9 @@
     "id": 48,
     "icon": "/assets/icons/perks/351---resupply.webp",
     "type": "defense",
-    "name": "Resupply",
+    "name": "Manual Control",
     "tier": 3,
-    "description": "Unlocks the Resupply Traps skill, allowing to Restore 1 charge to nearby Traps. Resupply Traps skill: 1-6 range (not range modifiable), 9 targets (3x3 square), 3 uses per night, 1 use per turn, Charge restoration (restores 1 charge to targeted Traps), Vision. Also unlocks the Resupply Catapult skill, allowing to Restore 1 use per night to a nearby catapult. Resupply Catapult skill: 1-6 range (not range modifiable), targets 1, 3 uses per night, 2 use per turn, Use restoration (restores 1 use per night to catapults), Vision."
+    "description": "When the Hero is adjacent to a Catapult, Ballista or Trap, unlocks a special skill allowing to manually use the effects of these defenses."
   },
   {
     "id": 49,
@@ -413,7 +413,7 @@
     "type": "misc",
     "name": "Cheer",
     "tier": 1,
-    "description": "Unlocks the Cheer Skill, which allows to Buff the Damage of an ally. Cheer skill: No cost, 1-10 range (not range modifiable), targets 1 ally, 1 use per turn, applies a +15% Damage Buff for 1 turn to the target."
+    "description": "At the start of the Heroes' turn, the Hero automatically casts Cheer on the closest allied hero, Buffing their Damage. /r Cheer skill: No cost, 1-15 range (not range modifiable), targets 1 ally, 1 use per turn, applies a +15% Damage Buff for 2 turns to the target."
   },
   {
     "id": 53,
@@ -453,7 +453,7 @@
     "type": "misc",
     "name": "Crippling Punch",
     "tier": 2,
-    "description": "Upgrades the Punch skill to Crippling Punch, dealing more double Damage and allowing to Debuff the target's Move Points."
+    "description": "Upgrades the Punch skill to Crippling Punch, dealing more Damage and allowing to Debuff the target's Move Points. Every 1 enemies killed using Crippling Punch, its base damage is increased by 1. The amount of enemies to kill is increased by 1 every 100 bonus damage obtained."
   },
   {
     "id": 58,
@@ -484,7 +484,7 @@
     "icon": "/assets/icons/perks/385---runic-gift.webp",
     "type": "misc",
     "name": "Runic Gift",
-    "tier": 3,
+    "tier": 4,
     "description": "+1 trinket equipment turn (Max 2). For every trinket equipped: +3 Mana per item level."
   },
   {
@@ -493,15 +493,15 @@
     "type": "misc",
     "name": "Initiator",
     "tier": 3,
-    "description": "As long as the Hero didn't kill anyone this turn: +2 MultiHit, -10% Damage."
+    "description": "As long as the Hero didn't kill anyone this turn: +2 MultiHit."
   },
   {
     "id": 63,
     "icon": "/assets/icons/perks/384---quantity-vs-quality.webp",
     "type": "misc",
-    "name": "Quantity Vs Quality",
+    "name": "Quality over Quantity",
     "tier": 3,
-    "description": "+3 Propagation Bounces, -6% Propagation Damage. Every 8 enemies killed by propagation: -1 Propagation Bounces, +3% Propagation Damage. This modifiers are resets every morning."
+    "description": "All of the Hero's Propagation Bounces is transformed into Propagation Damage (conversion rate: 800%). Increase Maximum Propagation Damage to 150."
   },
   {
     "id": 64,
@@ -517,14 +517,14 @@
     "type": "misc",
     "name": "Blood Magic",
     "tier": 3,
-    "description": "Skills now cost Health instead of Mana at 4x the original cost. All of the Hero's Mana is converted to Resistance (25% conversion rate) and Daily Mana Regen is converted to Daily Health Regen. Some Mana-related Perks are replaced accordingly."
+    "description": "Skills now cost Health instead of Mana at 4x the original cost. All of the Hero's Mana is converted to Resistance (conversion rate: 25%) and Daily Mana Regen is converted to Daily Health Regen (conversion rate: 100%). Some Mana-related Perks are replaced accordingly."
   },
   {
     "id": 66,
     "icon": "/assets/icons/perks/485---mana-shield.webp",
     "type": "misc",
     "name": "Mana Shield",
-    "tier": 4,
+    "tier": 3,
     "description": "For every 2 Mana spent, gain +3 Block buff for 3 turns."
   },
   {
@@ -557,7 +557,7 @@
     "type": "misc",
     "name": "Specialist",
     "tier": 4,
-    "description": "Disables the second weapon set, in exchange for +50% Damage and +1 use per turn on every Skill provided by your remaining weapon set (Items in Hand slots)."
+    "description": "Disables the second weapon set, in exchange for +40% Damage, 1 Action Point and +2 uses per turn on every Skill provided by your remaining weapon (provided by items in Main hand slot)."
   },
   {
     "id": 71,
@@ -565,7 +565,7 @@
     "type": "misc",
     "name": "Don't panic",
     "tier": 5,
-    "description": "When attacking a tile within the haven, the attack gets: +15% Accuracy, +40% Total Damage. (Total Damage is applied applied after Damage, but before Resistance, Block and Critical)"
+    "description": "When attacking a tile within the haven, the attack gets: Vision, cannot damage friendly buildings, +15% Accuracy, +40% Total Damage. (Total Damage is applied applied after Damage, but before Resistance, Block and Critical)"
   },
   {
     "id": 72,
