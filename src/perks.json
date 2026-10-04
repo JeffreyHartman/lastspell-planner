@@ -601,7 +601,7 @@
   },
   {
     "id": 76,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/beaker.svg",
+    "icon": "/assets/icons/perks/dwarf---jolly-drinker.webp",
     "type": "dwarf",
     "name": "Jolly Drinker",
     "tier": 1,
@@ -609,7 +609,7 @@
   },
   {
     "id": 77,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/trophy.svg",
+    "icon": "/assets/icons/perks/dwarf---bodycount-contest.webp",
     "type": "dwarf",
     "name": "Bodycount Contest",
     "tier": 1,
@@ -617,7 +617,7 @@
   },
   {
     "id": 78,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg",
+    "icon": "/assets/icons/perks/dwarf---thickness.webp",
     "type": "dwarf",
     "name": "Thickness",
     "tier": 2,
@@ -625,7 +625,7 @@
   },
   {
     "id": 79,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/fire.svg",
+    "icon": "/assets/icons/perks/dwarf---carnage.webp",
     "type": "dwarf",
     "name": "Carnage",
     "tier": 2,
@@ -633,7 +633,7 @@
   },
   {
     "id": 80,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg",
+    "icon": "/assets/icons/perks/dwarf---hard-as-a-rock.webp",
     "type": "dwarf",
     "name": "Hard As a Rock",
     "tier": 3,
@@ -641,7 +641,7 @@
   },
   {
     "id": 81,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/arrow-trending-up.svg",
+    "icon": "/assets/icons/perks/dwarf---look-at-my-muscles.webp",
     "type": "dwarf",
     "name": "Look At My Muscles",
     "tier": 3,
@@ -649,7 +649,7 @@
   },
   {
     "id": 82,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/megaphone.svg",
+    "icon": "/assets/icons/perks/dwarf---youre-next.webp",
     "type": "dwarf",
     "name": "You're next!",
     "tier": 4,
@@ -657,7 +657,7 @@
   },
   {
     "id": 83,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/arrow-path.svg",
+    "icon": "/assets/icons/perks/dwarf---emergency-tunnel.webp",
     "type": "dwarf",
     "name": "Emergency Tunnel",
     "tier": 4,
@@ -665,7 +665,7 @@
   },
   {
     "id": 84,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/heart.svg",
+    "icon": "/assets/icons/perks/dwarf---heart-of-the-party.webp",
     "type": "dwarf",
     "name": "Heart Of The Party",
     "tier": 5,
@@ -673,7 +673,7 @@
   },
   {
     "id": 85,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/megaphone.svg",
+    "icon": "/assets/icons/perks/dwarf---warcry.webp",
     "type": "dwarf",
     "name": "Warcry",
     "tier": 5,
@@ -681,7 +681,7 @@
   },
   {
     "id": 86,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/beaker.svg",
+    "icon": "/assets/icons/perks/elf---coffee-infused.webp",
     "type": "elf",
     "name": "Coffee Infused",
     "tier": 1,
@@ -689,7 +689,7 @@
   },
   {
     "id": 87,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sun.svg",
+    "icon": "/assets/icons/perks/elf---urban-hate.webp",
     "type": "elf",
     "name": "Urban Hate",
     "tier": 1,
@@ -697,7 +697,7 @@
   },
   {
     "id": 88,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sparkles.svg",
+    "icon": "/assets/icons/perks/elf---one-with-nature.webp",
     "type": "elf",
     "name": "One with Nature",
     "tier": 2,
@@ -705,7 +705,7 @@
   },
   {
     "id": 89,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/eye.svg",
+    "icon": "/assets/icons/perks/elf---sentry.webp",
     "type": "elf",
     "name": "Sentry",
     "tier": 2,
@@ -713,7 +713,7 @@
   },
   {
     "id": 90,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/trophy.svg",
+    "icon": "/assets/icons/perks/elf---deadly-ranger.webp",
     "type": "elf",
     "name": "Deadly Ranger",
     "tier": 3,
@@ -721,7 +721,7 @@
   },
   {
     "id": 91,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/bolt.svg",
+    "icon": "/assets/icons/perks/elf---flicker-strike.webp",
     "type": "elf",
     "name": "Flicker Strike",
     "tier": 3,
@@ -729,7 +729,7 @@
   },
   {
     "id": 92,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg",
+    "icon": "/assets/icons/perks/elf---elusive.webp",
     "type": "elf",
     "name": "Elusive",
     "tier": 4,
@@ -737,7 +737,7 @@
   },
   {
     "id": 93,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/bug-ant.svg",
+    "icon": "/assets/icons/perks/elf---infectious-strikes.webp",
     "type": "elf",
     "name": "Infectious Strikes",
     "tier": 4,
@@ -745,7 +745,7 @@
   },
   {
     "id": 94,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/arrow-trending-up.svg",
+    "icon": "/assets/icons/perks/elf---hunters-arsenal.webp",
     "type": "elf",
     "name": "Hunter's Arsenal",
     "tier": 5,
@@ -753,7 +753,7 @@
   },
   {
     "id": 95,
-    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sparkles.svg",
+    "icon": "/assets/icons/perks/elf---war-dance.webp",
     "type": "elf",
     "name": "War Dance",
     "tier": 5,

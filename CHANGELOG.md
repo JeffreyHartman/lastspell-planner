@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Off-hand Gauntlet (Dwarf) and Off-hand Boomerang (Elf) weapons.
+- In-game icons for all Dwarf and Elf perks, the Dwarf and Elf column headers, and the War Shield, Cannon, Gauntlet, Boomerang and Flower weapons. A community member extracted the icons from the game files.
+
 ## [1.0.0] - 2026-03-06
 
 ### Changed

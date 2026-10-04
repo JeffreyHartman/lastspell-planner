@@ -11,10 +11,6 @@
           :alt="`${columnType} column icon`"
           :title="capitalize(columnType)"
           class="h-5 w-5 sm:h-7 sm:w-7 object-contain"
-          :class="{
-            'rounded-full bg-slate-200 p-1':
-              hasPlaceholderColumnIcon(columnType),
-          }"
         />
         <span
           v-if="allowTypeSelection"
@@ -109,22 +105,10 @@ const VALID_ICON_TYPES = new Set([
 ]);
 
 const getColumnIconSrc = (type: string) => {
-  if (type === "dwarf") {
-    return "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/shield-check.svg";
-  }
-
-  if (type === "elf") {
-    return "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/sparkles.svg";
-  }
-
   if (!VALID_ICON_TYPES.has(type)) {
     return `/assets/icons/misc_Perks_Column_Icon.webp`;
   }
 
   return `/assets/icons/${type}_Perks_Column_Icon.webp`;
-};
-
-const hasPlaceholderColumnIcon = (type: string) => {
-  return type === "dwarf" || type === "elf";
 };
 </script>
