@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Off-hand Gauntlet (Dwarf) and Off-hand Boomerang (Elf) weapons.
+- REALLY Tossable Fellow, the Dwarf version of Leapfrog. Dwarf builds show it in place of Leapfrog in Miscellaneous columns.
 - In-game icons for all Dwarf and Elf perks, the Dwarf and Elf column headers, and the War Shield, Cannon, Gauntlet, Boomerang and Flower weapons. A community member extracted the icons from the game files.
+
+### Changed
+- Updated two Dwarf perks to match game version 1.3:
+  - **Jolly Drinker**: Now also grants +30% Healing Received
+  - **Hard As a Rock**: Block buff lasts 2 turns (was 1)
 
 ## [1.0.0] - 2026-03-06
 

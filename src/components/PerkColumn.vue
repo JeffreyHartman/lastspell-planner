@@ -32,6 +32,7 @@
           :tier="tier"
           :columnType="columnType"
           :searchQuery="searchQuery"
+          :race="race"
           @select-perk="onSelectPerk"
           @toggle-priority="onTogglePriority"
         />
@@ -44,8 +45,9 @@
 import PerkSlot from "./PerkSlot.vue";
 import { Perk } from "../types/Perk";
 import { SelectedPerk } from "../types/SelectedPerk";
+import { Race } from "../types/Race";
 import ColumnTypeSelector from "./ColumnTypeSelector.vue";
-import { computed, ref } from "vue";
+import { computed, ref, PropType } from "vue";
 
 const props = defineProps({
   columnType: {
@@ -63,6 +65,10 @@ const props = defineProps({
   searchQuery: {
     type: String,
     default: "",
+  },
+  race: {
+    type: String as PropType<Race>,
+    default: "human",
   },
 });
 const emit = defineEmits(["select-perk", "columntype-selected", "toggle-priority"]);

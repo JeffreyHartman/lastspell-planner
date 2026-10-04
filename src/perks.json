@@ -440,6 +440,16 @@
     "description": "Upgrades the Jump Over skill: -1 Move point cost (from 3 to 2), from melee range to 1-2 range cardinal, can also target enemies."
   },
   {
+    "id": 96,
+    "icon": "https://raw.githubusercontent.com/tailwindlabs/heroicons/master/src/24/solid/rocket-launch.svg",
+    "type": "misc",
+    "name": "REALLY Tossable Fellow",
+    "tier": 1,
+    "description": "Upgrades the Toss Me! skill: +2 Range. Can now be used when an ally is within a range of 4.",
+    "races": ["dwarf"],
+    "replaces": 55
+  },
+  {
     "id": 56,
     "icon": "/assets/icons/perks/281---avid-learner.webp",
     "type": "misc",
@@ -605,7 +615,7 @@
     "type": "dwarf",
     "name": "Jolly Drinker",
     "tier": 1,
-    "description": "Whenever a potion is used on the Hero: restore 2 Move Points."
+    "description": "Whenever a potion is used on the Hero: restore 2 Move Points. +30% Healing Received."
   },
   {
     "id": 77,
@@ -637,7 +647,7 @@
     "type": "dwarf",
     "name": "Hard As a Rock",
     "tier": 3,
-    "description": "Whenever an enemy is killed: gain +1 Block for 1 turn."
+    "description": "Whenever an enemy is killed: gain +1 Block for 2 turns."
   },
   {
     "id": 81,

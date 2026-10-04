@@ -78,6 +78,7 @@
         :columnType="column.type"
         :selectedPerks="column.perks"
         :searchQuery="searchQuery"
+        :race="selectedRace"
         @select-perk="onSelectPerk"
         @toggle-priority="onTogglePriority"
         @columntype-selected="onColumnTypeSelected"
@@ -96,6 +97,8 @@ import {
 import PerkColumn from "./PerkColumn.vue";
 import { PerkColumnType } from "../types/PerkColumn";
 import { Perk } from "../types/Perk";
+import { Race } from "../types/Race";
+import { getPerkForRace } from "../services/perkService";
 
 const props = defineProps<{
   initialState?: PerkColumnType[];
@@ -106,8 +109,6 @@ const emit = defineEmits<{
 }>();
 
 const searchQuery = ref("");
-
-type Race = "human" | "dwarf" | "elf";
 
 const races: { id: Race; label: string; columnType: string }[] = [
   { id: "human", label: "Human", columnType: "misc" },
@@ -153,6 +154,7 @@ onMounted(() => {
     selectedRace.value = getRaceByColumnType(
       perkColumns.value[RACIAL_COLUMN_INDEX]?.type ?? "misc",
     );
+    applyRaceToSelectedPerks(selectedRace.value);
   }
   isInitialized.value = true;
 });
@@ -165,6 +167,14 @@ function getRaceByColumnType(columnType: string): Race {
 
 function getColumnTypeByRace(race: Race): string {
   return races.find((entry) => entry.id === race)?.columnType ?? "misc";
+}
+
+function applyRaceToSelectedPerks(race: Race) {
+  for (const column of perkColumns.value) {
+    for (const sp of column.perks) {
+      sp.perk = { ...getPerkForRace(sp.perk, race) };
+    }
+  }
 }
 
 const onSelectPerk = (perk: Perk | null, columnId: number, tier: number) => {
@@ -224,6 +234,7 @@ const onRaceSelected = (race: Race) => {
 
   racialColumn.type = getColumnTypeByRace(race);
   racialColumn.perks = [];
+  applyRaceToSelectedPerks(race);
 };
 
 const resetPerks = () => {

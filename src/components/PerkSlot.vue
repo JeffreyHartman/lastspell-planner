@@ -43,6 +43,7 @@
 import { computed, ref, PropType, nextTick } from "vue";
 import { Perk } from "../types/Perk";
 import { SelectedPerk } from "../types/SelectedPerk";
+import { Race } from "../types/Race";
 import { getPerksByTypeAndTier } from "../services/perkService";
 import PerkPicker from "./PerkPicker.vue";
 import PerkTooltip from "./PerkTooltip.vue";
@@ -64,6 +65,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  race: {
+    type: String as PropType<Race>,
+    default: "human",
+  },
 });
 
 const emit = defineEmits(["select-perk", "toggle-priority"]);
@@ -80,7 +85,7 @@ const isSearchActive = computed(() => props.searchQuery.length > 0);
 const matchingPerks = computed(() => {
   if (!isSearchActive.value) return [];
   const query = props.searchQuery.toLowerCase();
-  return getPerksByTypeAndTier(props.columnType, props.tier).filter((perk) =>
+  return getPerksByTypeAndTier(props.columnType, props.tier, props.race).filter((perk) =>
     perk.name.toLowerCase().includes(query),
   );
 });
@@ -92,7 +97,7 @@ const matchingPerkNames = computed(() =>
 );
 
 const availablePerks = computed(() => {
-  const perks = getPerksByTypeAndTier(props.columnType, props.tier);
+  const perks = getPerksByTypeAndTier(props.columnType, props.tier, props.race);
   const clearPerk: Perk = {
     id: 0,
     name: "Clear Perk",
